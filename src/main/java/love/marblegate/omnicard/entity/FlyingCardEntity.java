@@ -36,13 +36,14 @@ import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.core.manager.InstancedAnimationFactory;
 
 
 public class FlyingCardEntity extends ProjectileEntity implements IAnimatable, IEntityAdditionalSpawnData {
     private double xPower;
     private double yPower;
     private double zPower;
-    private final AnimationFactory factory = new AnimationFactory(this);
+    private final AnimationFactory factory = new InstancedAnimationFactory(this);
     private CommonCard card;
     private static final DataParameter<Boolean> CAN_PICK_UP = EntityDataManager.defineId(FlyingCardEntity.class, DataSerializers.BOOLEAN);
     private static final DataParameter<Integer> LIFETIME = EntityDataManager.defineId(FlyingCardEntity.class, DataSerializers.INT);
