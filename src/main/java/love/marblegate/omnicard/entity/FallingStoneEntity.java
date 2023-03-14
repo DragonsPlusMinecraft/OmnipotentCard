@@ -22,13 +22,14 @@ import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class FallingStoneEntity extends Entity implements IAnimatable {
-    private final AnimationFactory factory = new AnimationFactory(this);
-    private static final EntityDataAccessor<Boolean> DONE_HIT = SynchedEntityData.defineId(FlyingCardEntity.class, EntityDataSerializers.BOOLEAN);
+    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
+    private static final EntityDataAccessor<Boolean> DONE_HIT = SynchedEntityData.defineId(FallingStoneEntity.class, EntityDataSerializers.BOOLEAN);
     private int disappearCountdown;
 
 
@@ -93,10 +94,10 @@ public class FallingStoneEntity extends Entity implements IAnimatable {
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         if (getEntityData().get(DONE_HIT)) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("disappear", false));
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("disappear"));
             return PlayState.CONTINUE;
         } else {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("falling", true));
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("falling"));
             return PlayState.CONTINUE;
         }
     }

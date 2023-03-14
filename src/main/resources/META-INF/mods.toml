@@ -31,3 +31,9 @@ Cards that can be thrown, used as a trap, or used as a force field.
     versionRange="[1.18.2,1.19)"
     ordering="NONE"
     side="BOTH"
+[[dependencies.omni_card]]
+    modId="geckolib3"
+    mandatory=true
+    versionRange="[3.0.57,3.1)"
+    ordering="NONE"
+    side="BOTH"

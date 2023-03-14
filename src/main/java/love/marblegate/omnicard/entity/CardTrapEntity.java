@@ -27,6 +27,7 @@ import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -34,7 +35,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class CardTrapEntity extends Entity implements IAnimatable, IEntityAdditionalSpawnData {
-    private final AnimationFactory factory = new AnimationFactory(this);
+    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
     private CommonCard card;
     private UUID ownerUUID;
 

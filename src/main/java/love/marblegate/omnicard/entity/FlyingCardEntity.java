@@ -33,11 +33,12 @@ import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class FlyingCardEntity extends Projectile implements IAnimatable, IEntityAdditionalSpawnData {
     private static final EntityDataAccessor<Boolean> CAN_PICK_UP = SynchedEntityData.defineId(FlyingCardEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> LIFETIME = SynchedEntityData.defineId(FlyingCardEntity.class, EntityDataSerializers.INT);
-    private final AnimationFactory factory = new AnimationFactory(this);
+    private final AnimationFactory factory = GeckoLibUtil.createFactory(this,false);
     private CommonCard card;
     private double xPower;
     private double yPower;
@@ -74,7 +75,7 @@ public class FlyingCardEntity extends Projectile implements IAnimatable, IEntity
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         if (!canPickUp()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("cardfly_normal", true));
+            event.getController().setAnimation(new AnimationBuilder().loop("cardfly_normal"));
             return PlayState.CONTINUE;
         } else {
             return PlayState.STOP;

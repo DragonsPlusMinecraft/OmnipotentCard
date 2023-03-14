@@ -17,10 +17,11 @@ import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class StoneSpikeEntity extends Entity implements IAnimatable {
-    private final AnimationFactory factory = new AnimationFactory(this);
-    private static final EntityDataAccessor<Boolean> DONE_STRIKE = SynchedEntityData.defineId(FlyingCardEntity.class, EntityDataSerializers.BOOLEAN);
+    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
+    private static final EntityDataAccessor<Boolean> DONE_STRIKE = SynchedEntityData.defineId(StoneSpikeEntity.class, EntityDataSerializers.BOOLEAN);
     private int lifetime;
 
 
@@ -69,7 +70,7 @@ public class StoneSpikeEntity extends Entity implements IAnimatable {
         if (getEntityData().get(DONE_STRIKE))
             return PlayState.STOP;
         else {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("rise", false));
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("rise"));
             return PlayState.CONTINUE;
         }
     }

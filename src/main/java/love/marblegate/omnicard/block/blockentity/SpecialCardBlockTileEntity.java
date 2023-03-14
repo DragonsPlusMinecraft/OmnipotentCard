@@ -18,11 +18,12 @@ import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import javax.annotation.Nullable;
 
 public class SpecialCardBlockTileEntity extends BlockEntity implements IAnimatable {
-    private final AnimationFactory factory = new AnimationFactory(this);
+    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
     private BlockCard card;
 
     public int getLifetime() {
@@ -38,9 +39,9 @@ public class SpecialCardBlockTileEntity extends BlockEntity implements IAnimatab
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         if (preparedVanish) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("card_on_disappear", false));
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("card_on_disappear"));
         } else {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("card_floating", true));
+            event.getController().setAnimation(new AnimationBuilder().loop("card_floating"));
         }
         return PlayState.CONTINUE;
     }
