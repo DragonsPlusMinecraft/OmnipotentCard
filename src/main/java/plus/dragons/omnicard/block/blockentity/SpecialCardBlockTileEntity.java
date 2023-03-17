@@ -11,19 +11,19 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 import javax.annotation.Nullable;
 
-public class SpecialCardBlockTileEntity extends BlockEntity implements IAnimatable {
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
+public class SpecialCardBlockTileEntity extends BlockEntity implements GeoAnimatable {
+    private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
     private BlockCard card;
 
     public int getLifetime() {
@@ -37,23 +37,28 @@ public class SpecialCardBlockTileEntity extends BlockEntity implements IAnimatab
         super(BlockEntityRegistry.SPECIAL_CARD_BLOCK_TILEENTITY.get(), pos, state);
     }
 
-    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+    private <E extends GeoAnimatable> PlayState predicate(AnimationState<E> state) {
         if (preparedVanish) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("card_on_disappear"));
+            state.getController().setAnimation(RawAnimation.begin().thenPlay("card_on_disappear"));
         } else {
-            event.getController().setAnimation(new AnimationBuilder().loop("card_floating"));
+            state.getController().setAnimation(RawAnimation.begin().thenLoop("card_floating"));
         }
         return PlayState.CONTINUE;
     }
 
     @Override
-    public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController(this, "card_block_controller", 1, this::predicate));
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+        controllerRegistrar.add(new AnimationController<>(this, "card_block_controller", 1, this::predicate));
     }
 
     @Override
-    public AnimationFactory getFactory() {
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
         return factory;
+    }
+
+    @Override
+    public double getTick(Object o) {
+        return 0;
     }
 
     public void tickServer() {
@@ -150,5 +155,4 @@ public class SpecialCardBlockTileEntity extends BlockEntity implements IAnimatab
         preparedVanish = tag.getBoolean("should_disappear");
         lifetime = tag.getInt("lifetime");
     }
-
 }

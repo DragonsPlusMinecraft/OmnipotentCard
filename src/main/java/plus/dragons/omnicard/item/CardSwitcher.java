@@ -39,7 +39,7 @@ public class CardSwitcher extends Item {
     private static final List<CommonCard> availableCardType = Lists.newArrayList(CommonCards.INK, CommonCards.RED, CommonCards.CORAL, CommonCards.GOLD, CommonCards.SEA_GREEN, CommonCards.AZURE, CommonCards.CERULEAN_BLUE, CommonCards.HELIOTROPE);
 
     public CardSwitcher() {
-        super(new Properties().tab(ModGroup.GENERAL));
+        super(new Properties());
     }
 
     @Override

@@ -11,8 +11,9 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import plus.dragons.omnicard.misc.ModGroup;
 import plus.dragons.omnicard.registry.*;
-import software.bernie.geckolib3.GeckoLib;
+import software.bernie.geckolib.GeckoLib;;
 
 @Mod(OmniCard.MODID)
 public class OmniCard {
@@ -22,6 +23,7 @@ public class OmniCard {
     public OmniCard() {
         GeckoLib.initialize();
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Configuration.COMMON_CONFIG);
+        var modEventbus = FMLJavaModLoadingContext.get().getModEventBus();
 
         ItemRegistry.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
         EntityRegistry.ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
@@ -30,9 +32,9 @@ public class OmniCard {
         BlockEntityRegistry.BLOCK_ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
         SoundRegistry.SOUNDS.register(FMLJavaModLoadingContext.get().getModEventBus());
 
+        modEventbus.addListener(ModGroup::registerTabs);
 
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
-
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {

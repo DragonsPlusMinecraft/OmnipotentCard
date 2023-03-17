@@ -46,8 +46,8 @@ public class CardFunc {
         public static void redCard(FlyingCardEntity card, LivingEntity victim) {
             if (!card.level.isClientSide()) {
                 if (victim.hasEffect(MobEffectRegistry.READY_TO_EXPLODE.get())) {
-                    Explosion.BlockInteraction explosion$mode = net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(victim.level, victim) ? Explosion.BlockInteraction.BREAK : Explosion.BlockInteraction.NONE;
-                    victim.level.explode(victim, ModDamage.causeCardDamage(card, card.getOwner()).setExplosion(), null, victim.getX(), victim.getY(), victim.getZ(), 0.71F, false, explosion$mode);
+                    Level.ExplosionInteraction interaction = net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(victim.level, victim) ? Level.ExplosionInteraction.TNT : Level.ExplosionInteraction.NONE;
+                    victim.level.explode(victim, ModDamage.causeCardDamage(card, card.getOwner()).setExplosion(), null, victim.getX(), victim.getY(), victim.getZ(), 0.71F, false, interaction);
                 }
                 victim.addEffect(new MobEffectInstance(MobEffectRegistry.READY_TO_EXPLODE.get(), 30));
                 victim.level.playSound((Player) null, victim.getX(), victim.getY(), victim.getZ(), SoundRegistry.COLORED_CARD_HIT.get(), SoundSource.PLAYERS, 1.0F, 1.0F);

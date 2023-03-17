@@ -20,7 +20,7 @@ import net.minecraft.world.phys.Vec3;
 public class BlankCard extends Item {
 
     public BlankCard() {
-        super(new Properties().tab(ModGroup.GENERAL));
+        super(new Properties());
     }
 
     @Override

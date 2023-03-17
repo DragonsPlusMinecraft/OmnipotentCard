@@ -32,7 +32,7 @@ public class ElementalCard extends Item {
     public final CommonCard card;
 
     public ElementalCard(CommonCard card) {
-        super(new Properties().tab(ModGroup.GENERAL));
+        super(new Properties());
         this.card = card;
     }
 

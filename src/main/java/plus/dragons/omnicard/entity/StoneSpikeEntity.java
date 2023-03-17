@@ -1,5 +1,6 @@
 package plus.dragons.omnicard.entity;
 
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import plus.dragons.omnicard.registry.EntityRegistry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
@@ -10,17 +11,17 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.network.NetworkHooks;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class StoneSpikeEntity extends Entity implements IAnimatable {
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
+public class StoneSpikeEntity extends Entity implements GeoAnimatable {
+    private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
     private static final EntityDataAccessor<Boolean> DONE_STRIKE = SynchedEntityData.defineId(StoneSpikeEntity.class, EntityDataSerializers.BOOLEAN);
     private int lifetime;
 
@@ -62,26 +63,31 @@ public class StoneSpikeEntity extends Entity implements IAnimatable {
     }
 
     @Override
-    public Packet<?> getAddEntityPacket() {
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
-    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+    private <E extends GeoAnimatable> PlayState predicate(AnimationState<E> state) {
         if (getEntityData().get(DONE_STRIKE))
             return PlayState.STOP;
         else {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("rise"));
+            state.getController().setAnimation(RawAnimation.begin().thenPlayAndHold("rise"));
             return PlayState.CONTINUE;
         }
     }
 
     @Override
-    public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController(this, "falling_stone_controller", 1, this::predicate));
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+        controllerRegistrar.add(new AnimationController<>(this, "falling_stone_controller", 1, this::predicate));
     }
 
     @Override
-    public AnimationFactory getFactory() {
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
         return factory;
+    }
+
+    @Override
+    public double getTick(Object o) {
+        return 0;
     }
 }

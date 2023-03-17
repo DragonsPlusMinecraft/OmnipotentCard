@@ -3,9 +3,9 @@ package plus.dragons.omnicard.model;
 import plus.dragons.omnicard.OmniCard;
 import plus.dragons.omnicard.block.blockentity.SpecialCardBlockTileEntity;
 import net.minecraft.resources.ResourceLocation;
-import software.bernie.geckolib3.model.AnimatedGeoModel;
+import software.bernie.geckolib.model.GeoModel;
 
-public class SpecialCardBlockModel extends AnimatedGeoModel<SpecialCardBlockTileEntity> {
+public class SpecialCardBlockModel extends GeoModel<SpecialCardBlockTileEntity> {
     @Override
     public ResourceLocation getModelResource(SpecialCardBlockTileEntity object) {
         return new ResourceLocation(OmniCard.MODID, "geo/block/special_card_block.geo.json");

@@ -3,9 +3,9 @@ package plus.dragons.omnicard.renderer;
 import plus.dragons.omnicard.entity.CardTrapEntity;
 import plus.dragons.omnicard.model.CardTrapEntityModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import software.bernie.geckolib3.renderers.geo.GeoProjectilesRenderer;
+import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
-public class CardTrapEntityRenderer extends GeoProjectilesRenderer<CardTrapEntity> {
+public class CardTrapEntityRenderer extends GeoEntityRenderer<CardTrapEntity> {
     public CardTrapEntityRenderer(EntityRendererProvider.Context renderManager) {
         super(renderManager, new CardTrapEntityModel());
         shadowRadius = 0.03F;

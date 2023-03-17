@@ -1,5 +1,6 @@
 package plus.dragons.omnicard.entity;
 
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import plus.dragons.omnicard.card.CommonCard;
 import plus.dragons.omnicard.card.CommonCards;
 import plus.dragons.omnicard.misc.Configuration;
@@ -26,19 +27,19 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.entity.IEntityAdditionalSpawnData;
 import net.minecraftforge.network.NetworkHooks;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class FlyingCardEntity extends Projectile implements IAnimatable, IEntityAdditionalSpawnData {
+public class FlyingCardEntity extends Projectile implements GeoAnimatable, IEntityAdditionalSpawnData {
     private static final EntityDataAccessor<Boolean> CAN_PICK_UP = SynchedEntityData.defineId(FlyingCardEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> LIFETIME = SynchedEntityData.defineId(FlyingCardEntity.class, EntityDataSerializers.INT);
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this,false);
+    private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this,false);
     private CommonCard card;
     private double xPower;
     private double yPower;
@@ -73,19 +74,18 @@ public class FlyingCardEntity extends Projectile implements IAnimatable, IEntity
         return p_36837_ < d0 * d0;
     }
 
-    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+    private <E extends GeoAnimatable> PlayState predicate(AnimationState<E> state) {
         if (!canPickUp()) {
-            event.getController().setAnimation(new AnimationBuilder().loop("cardfly_normal"));
+            state.getController().setAnimation(RawAnimation.begin().thenLoop("cardfly_normal"));
             return PlayState.CONTINUE;
         } else {
             return PlayState.STOP;
         }
     }
 
-
     @Override
-    public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController(this, "card_controller", 0, this::predicate));
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+        controllerRegistrar.add(new AnimationController<>(this, "card_controller", 1, this::predicate));
     }
 
     @Override
@@ -152,8 +152,13 @@ public class FlyingCardEntity extends Projectile implements IAnimatable, IEntity
     }
 
     @Override
-    public AnimationFactory getFactory() {
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
         return factory;
+    }
+
+    @Override
+    public double getTick(Object o) {
+        return 0;
     }
 
     @Override
@@ -239,7 +244,7 @@ public class FlyingCardEntity extends Projectile implements IAnimatable, IEntity
     }
 
     @Override
-    public Packet<?> getAddEntityPacket() {
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 

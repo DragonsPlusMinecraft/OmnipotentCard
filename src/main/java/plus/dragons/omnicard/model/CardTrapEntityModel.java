@@ -4,10 +4,11 @@ import plus.dragons.omnicard.OmniCard;
 import plus.dragons.omnicard.entity.CardTrapEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
-import software.bernie.geckolib3.model.AnimatedGeoModel;
+import software.bernie.geckolib.model.GeoModel;
+
 import java.util.UUID;
 
-public class CardTrapEntityModel extends AnimatedGeoModel<CardTrapEntity> {
+public class CardTrapEntityModel extends GeoModel<CardTrapEntity> {
     @Override
     public ResourceLocation getModelResource(CardTrapEntity object) {
         return new ResourceLocation(OmniCard.MODID, "geo/entity/card.geo.json");

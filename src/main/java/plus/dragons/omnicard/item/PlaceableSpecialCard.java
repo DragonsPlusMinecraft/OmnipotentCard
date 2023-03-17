@@ -38,7 +38,7 @@ public class PlaceableSpecialCard extends Item {
     public final BlockCard card;
 
     public PlaceableSpecialCard(BlockCard card) {
-        super(new Properties().tab(ModGroup.GENERAL));
+        super(new Properties());
         this.card = card;
     }
 

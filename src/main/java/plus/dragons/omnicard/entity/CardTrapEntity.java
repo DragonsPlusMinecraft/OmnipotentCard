@@ -1,5 +1,6 @@
 package plus.dragons.omnicard.entity;
 
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import plus.dragons.omnicard.card.CommonCard;
 import plus.dragons.omnicard.card.CommonCards;
 import plus.dragons.omnicard.misc.Configuration;
@@ -21,26 +22,26 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.entity.IEntityAdditionalSpawnData;
 import net.minecraftforge.network.NetworkHooks;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class CardTrapEntity extends Entity implements IAnimatable, IEntityAdditionalSpawnData {
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
+public class CardTrapEntity extends Entity implements GeoAnimatable, IEntityAdditionalSpawnData {
+    private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
     private CommonCard card;
     private UUID ownerUUID;
 
-    public CardTrapEntity(EntityType<? extends CardTrapEntity> p_i50173_1_, Level p_i50173_2_) {
-        super(p_i50173_1_, p_i50173_2_);
+    public CardTrapEntity(EntityType<? extends CardTrapEntity> entityType, Level level) {
+        super(entityType, level);
     }
 
     public CardTrapEntity(Level world, CommonCard card) {
@@ -48,14 +49,14 @@ public class CardTrapEntity extends Entity implements IAnimatable, IEntityAdditi
         this.card = card;
     }
 
-    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+    private <E extends GeoAnimatable> PlayState predicate(AnimationState<E> event) {
         // it seems like no need for animation
         return PlayState.STOP;
     }
 
     @Override
-    public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController(this, "card_controller", 1, this::predicate));
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+        controllerRegistrar.add(new AnimationController<>(this, "card_controller", 1, this::predicate));
     }
 
     @Override
@@ -162,10 +163,14 @@ public class CardTrapEntity extends Entity implements IAnimatable, IEntityAdditi
     }
 
     @Override
-    public AnimationFactory getFactory() {
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
         return factory;
     }
 
+    @Override
+    public double getTick(Object o) {
+        return 0;
+    }
 
     public CommonCard getCardType() {
         return card;
@@ -188,7 +193,7 @@ public class CardTrapEntity extends Entity implements IAnimatable, IEntityAdditi
 
 
     @Override
-    public Packet<?> getAddEntityPacket() {
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
