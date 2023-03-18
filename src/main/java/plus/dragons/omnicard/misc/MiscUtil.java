@@ -85,7 +85,7 @@ public class MiscUtil {
     public static void applyHugeDamageThenApplyFireInArea(ServerLevel world, AABB aabb, float damage, int fireSecond) {
         world.getEntities((Entity) null, aabb, entity -> entity instanceof LivingEntity && isHostile((LivingEntity) entity, false))
                 .forEach(entity -> {
-                    entity.hurt(DamageSource.MAGIC,damage);
+                    entity.hurt(entity.damageSources().magic(),damage);
                     entity.setSecondsOnFire(fireSecond);
                 });
     }

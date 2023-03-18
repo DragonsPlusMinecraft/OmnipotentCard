@@ -1,7 +1,8 @@
 package plus.dragons.omnicard.misc;
 
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.*;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 
@@ -9,34 +10,41 @@ import javax.annotation.Nullable;
 
 public class ModDamage {
 
+    private static DamageType HOLY_FIRE = new DamageType("omni_card.holy_fire", 0.1F, DamageEffects.BURNING);
+
+    private static DamageType LETHAL_POISON = new DamageType("omni_card.lethal_poison", 0.1F, DamageEffects.BURNING);
+
+    private static DamageType EXPLOSION = new DamageType("omni_card.explosion", 0.1F, DamageEffects.BURNING);
+
     public static DamageSource causeHolyFlameDamage() {
-        return new SimpleDeathMessageDamageSource("omni_card.holy_fire");
+        return new SimpleDeathMessageDamageSource(Holder.direct(HOLY_FIRE));
     }
 
     public static DamageSource causeLethalPoisonDamage() {
-        return new SimpleDeathMessageDamageSource("omni_card.lethal_poison").bypassArmor();
+        return new SimpleDeathMessageDamageSource(Holder.direct(LETHAL_POISON));
     }
 
     public static DamageSource causeExplosion() {
-        return new SimpleDeathMessageDamageSource("omni_card.explosion").setExplosion();
+        return new SimpleDeathMessageDamageSource(Holder.direct(EXPLOSION));
     }
 
-    public static DamageSource causeCardDamage(Entity damageSource, @Nullable Entity owner) {
+    public static DamageSource causeCardDamage(DamageSources sources, Entity from, @Nullable Entity owner) {
         if (owner instanceof LivingEntity)
-            return DamageSource.mobAttack((LivingEntity) owner);
+            return sources.mobAttack((LivingEntity) owner);
         else
-            return DamageSource.thrown(damageSource, owner);
+            return sources.thrown(from, owner);
     }
 
     public static class SimpleDeathMessageDamageSource extends DamageSource {
-        public SimpleDeathMessageDamageSource(String damageTypeIn) {
-            super(damageTypeIn);
+
+        public SimpleDeathMessageDamageSource(Holder<DamageType> typeHolder) {
+            super(typeHolder, null, null);
         }
 
         @Override
-        public Component getLocalizedDeathMessage(LivingEntity entityLivingBaseIn) {
-            String s = "death.attack." + msgId;
-            return Component.translatable(s, entityLivingBaseIn.getDisplayName());
+        public Component getLocalizedDeathMessage(LivingEntity livingEntity) {
+            String s = "death.attack." + type().msgId();
+            return Component.translatable(s, livingEntity.getDisplayName());
         }
     }
 }

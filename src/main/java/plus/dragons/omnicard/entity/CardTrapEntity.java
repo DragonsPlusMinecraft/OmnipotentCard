@@ -97,7 +97,7 @@ public class CardTrapEntity extends Entity implements GeoEntity, IEntityAddition
                 move(MoverType.SELF, getDeltaMovement());
                 float f1 = 0.98F;
                 if (onGround) {
-                    f1 = level.getBlockState(new BlockPos(getX(), getY() - 1.0D, getZ())).getFriction(level, new BlockPos(getX(), getY() - 1.0D, getZ()), this) * 0.98F;
+                    f1 = level.getBlockState(new BlockPos((int) getX(), (int) (getY() - 1.0D), (int) getZ())).getFriction(level, new BlockPos((int) getX(), (int) (getY() - 1.0D), (int) getZ()), this) * 0.98F;
                 }
 
                 this.setDeltaMovement(getDeltaMovement().multiply(f1, 0.98D, f1));

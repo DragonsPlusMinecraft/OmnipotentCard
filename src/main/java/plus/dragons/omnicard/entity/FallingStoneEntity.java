@@ -50,7 +50,7 @@ public class FallingStoneEntity extends Entity implements GeoEntity {
             List<LivingEntity> targets = getLivingEntityBeneath();
             if (!targets.isEmpty()) {
                 for (LivingEntity livingEntity : targets) {
-                    livingEntity.hurt(ModDamage.causeCardDamage(this, null), 6);
+                    livingEntity.hurt(ModDamage.causeCardDamage(this.damageSources(),this, null), 6);
                     livingEntity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 100));
                     livingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100));
                 }

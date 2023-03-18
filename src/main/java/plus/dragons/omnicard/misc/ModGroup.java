@@ -16,7 +16,7 @@ public class ModGroup {
         GENERAL = event.registerCreativeModeTab(new ResourceLocation(OmniCard.MODID, "general"), builder -> builder
                 .icon(()->ItemRegistry.BLANK_CARD.get().getDefaultInstance())
                 .title(Component.translatable("itemGroup.omni_card.general"))
-                .displayItems((featureFlags, output, hasOp) -> {
+                .displayItems((parameters, output) -> {
                     output.accept(ItemRegistry.BLANK_CARD.get());
                     output.accept(ItemRegistry.FLAME_CARD.get());
                     output.accept(ItemRegistry.TORRENT_CARD.get());
