@@ -1,6 +1,7 @@
 package plus.dragons.omnicard.entity;
 
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import org.jetbrains.annotations.NotNull;
 import plus.dragons.omnicard.registry.EntityRegistry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
@@ -12,24 +13,21 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.network.NetworkHooks;
 import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.core.animation.AnimationController;
-import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.animation.RawAnimation;
-import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class StoneSpikeEntity extends Entity implements GeoEntity {
     private static final RawAnimation RISE = RawAnimation.begin().thenPlayAndHold("rise");
-    private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     private static final EntityDataAccessor<Boolean> DONE_STRIKE = SynchedEntityData.defineId(StoneSpikeEntity.class, EntityDataSerializers.BOOLEAN);
     private int lifetime;
 
 
-    public StoneSpikeEntity(EntityType<?> p_i48580_1_, Level p_i48580_2_) {
-        super(p_i48580_1_, p_i48580_2_);
+    public StoneSpikeEntity(EntityType<?> entityType, Level level) {
+        super(entityType, level);
     }
 
     public StoneSpikeEntity(Level world) {
@@ -65,24 +63,18 @@ public class StoneSpikeEntity extends Entity implements GeoEntity {
     }
 
     @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket() {
+    public @NotNull Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
-        controllerRegistrar.add(new AnimationController<>(this, "falling_stone_controller", 1, state->{
-            if (state.getAnimatable().getEntityData().get(DONE_STRIKE))
-                return PlayState.STOP;
-            else {
-                state.getController().setAnimation(RISE);
-                return PlayState.CONTINUE;
-            }
-        }));
+        controllerRegistrar.add(new AnimationController<>(this, state -> state.setAndContinue(RISE))
+                .setAnimationSpeedHandler(stoneSpikeEntity -> stoneSpikeEntity.getEntityData().get(DONE_STRIKE)? 0: 1D));
     }
 
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
-        return factory;
+        return cache;
     }
 }

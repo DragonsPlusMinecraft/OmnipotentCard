@@ -24,7 +24,7 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 import javax.annotation.Nullable;
 
 public class SpecialCardBlockTileEntity extends BlockEntity implements GeoBlockEntity {
-    private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     private BlockCard card;
 
     public int getLifetime() {
@@ -38,23 +38,21 @@ public class SpecialCardBlockTileEntity extends BlockEntity implements GeoBlockE
         super(BlockEntityRegistry.SPECIAL_CARD_BLOCK_TILEENTITY.get(), pos, state);
     }
 
-    private <E extends GeoAnimatable> PlayState predicate(AnimationState<E> state) {
-        if (preparedVanish) {
-            state.getController().setAnimation(RawAnimation.begin().thenPlay("card_on_disappear"));
-        } else {
-            state.getController().setAnimation(RawAnimation.begin().thenLoop("card_floating"));
-        }
-        return PlayState.CONTINUE;
-    }
-
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
-        controllerRegistrar.add(new AnimationController<>(this, "card_block_controller", 1, this::predicate));
+        controllerRegistrar.add(new AnimationController<>(this,  state->{
+            if (state.getAnimatable().preparedVanish) {
+                state.getController().setAnimation(RawAnimation.begin().thenPlay("card_on_disappear"));
+            } else {
+                state.getController().setAnimation(RawAnimation.begin().thenLoop("card_floating"));
+            }
+            return PlayState.CONTINUE;
+        }));
     }
 
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
-        return factory;
+        return cache;
     }
 
     public void tickServer() {

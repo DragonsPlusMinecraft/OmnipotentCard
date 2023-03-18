@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 public class FallingStoneEntity extends Entity implements GeoEntity {
     private static final RawAnimation DISAPPEAR = RawAnimation.begin().thenPlayAndHold("disappear");
     private static final RawAnimation FALL = RawAnimation.begin().thenPlayAndHold("falling");
-    private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     private static final EntityDataAccessor<Boolean> DONE_HIT = SynchedEntityData.defineId(FallingStoneEntity.class, EntityDataSerializers.BOOLEAN);
     private int disappearCountdown;
 
@@ -108,7 +108,7 @@ public class FallingStoneEntity extends Entity implements GeoEntity {
 
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
-        return factory;
+        return cache;
     }
 
     private List<LivingEntity> getLivingEntityBeneath() {

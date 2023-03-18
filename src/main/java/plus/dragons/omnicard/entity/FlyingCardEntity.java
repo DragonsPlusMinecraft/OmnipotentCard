@@ -1,6 +1,7 @@
 package plus.dragons.omnicard.entity;
 
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import org.jetbrains.annotations.NotNull;
 import plus.dragons.omnicard.card.CommonCard;
 import plus.dragons.omnicard.card.CommonCards;
 import plus.dragons.omnicard.misc.Configuration;
@@ -32,14 +33,13 @@ import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.core.animation.AnimationController;
 import software.bernie.geckolib.core.animation.RawAnimation;
-import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class FlyingCardEntity extends Projectile implements GeoEntity, IEntityAdditionalSpawnData {
     private static final RawAnimation CARD_FLY = RawAnimation.begin().thenLoop("fly");
     private static final EntityDataAccessor<Boolean> CAN_PICK_UP = SynchedEntityData.defineId(FlyingCardEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> LIFETIME = SynchedEntityData.defineId(FlyingCardEntity.class, EntityDataSerializers.INT);
-    private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     private CommonCard card;
     private double xPower;
     private double yPower;
@@ -76,13 +76,8 @@ public class FlyingCardEntity extends Projectile implements GeoEntity, IEntityAd
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
-        controllerRegistrar.add(new AnimationController<>(this, "card_controller", 1, state -> {
-            if (!state.getAnimatable().canPickUp()) {
-                return state.setAndContinue(CARD_FLY);
-            } else {
-                return PlayState.STOP;
-            }
-        }));
+        controllerRegistrar.add(new AnimationController<>(this, state -> state.setAndContinue(CARD_FLY))
+                .setAnimationSpeedHandler(flyingCardEntity -> flyingCardEntity.canPickUp()?0.01:1D));
     }
 
     @Override
@@ -140,7 +135,7 @@ public class FlyingCardEntity extends Projectile implements GeoEntity, IEntityAd
     }
 
     @Override
-    protected boolean canHitEntity(Entity entity) {
+    protected boolean canHitEntity(@NotNull Entity entity) {
         return super.canHitEntity(entity) && !entity.noPhysics;
     }
 
@@ -150,16 +145,16 @@ public class FlyingCardEntity extends Projectile implements GeoEntity, IEntityAd
 
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
-        return factory;
+        return cache;
     }
 
     @Override
-    protected void onHit(HitResult rayTraceResult) {
+    protected void onHit(@NotNull HitResult rayTraceResult) {
         super.onHit(rayTraceResult);
     }
 
     @Override
-    protected void onHitEntity(EntityHitResult entityRayTraceResult) {
+    protected void onHitEntity(@NotNull EntityHitResult entityRayTraceResult) {
         super.onHitEntity(entityRayTraceResult);
         Entity entity = entityRayTraceResult.getEntity();
         if (entity instanceof LivingEntity && !canPickUp()) {
@@ -185,7 +180,7 @@ public class FlyingCardEntity extends Projectile implements GeoEntity, IEntityAd
     }
 
     @Override
-    protected void onHitBlock(BlockHitResult blockRayTraceResult) {
+    protected void onHitBlock(@NotNull BlockHitResult blockRayTraceResult) {
         super.onHitBlock(blockRayTraceResult);
         card.hitBlock(this, blockRayTraceResult.getBlockPos(), blockRayTraceResult.getDirection());
         if (!this.isRemoved())

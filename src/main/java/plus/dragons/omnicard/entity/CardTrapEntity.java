@@ -1,6 +1,7 @@
 package plus.dragons.omnicard.entity;
 
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import org.jetbrains.annotations.NotNull;
 import plus.dragons.omnicard.card.CommonCard;
 import plus.dragons.omnicard.card.CommonCards;
 import plus.dragons.omnicard.misc.Configuration;
@@ -25,8 +26,6 @@ import net.minecraftforge.network.NetworkHooks;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
-import software.bernie.geckolib.core.animation.AnimationController;
-import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import javax.annotation.Nullable;
@@ -35,7 +34,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class CardTrapEntity extends Entity implements GeoEntity, IEntityAdditionalSpawnData {
-    private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     private CommonCard card;
     private UUID ownerUUID;
 
@@ -57,7 +56,7 @@ public class CardTrapEntity extends Entity implements GeoEntity, IEntityAddition
     }
 
     @Override
-    public InteractionResult interact(Player player, InteractionHand hand) {
+    public @NotNull InteractionResult interact(Player player, @NotNull InteractionHand hand) {
         if (!player.level.isClientSide()) {
             if (card.getRetrievedItem().isPresent())
                 player.level.addFreshEntity(new ItemEntity(player.level, this.getX(), this.getY(), this.getZ(), card.getRetrievedItem().get().getDefaultInstance()));
@@ -156,7 +155,7 @@ public class CardTrapEntity extends Entity implements GeoEntity, IEntityAddition
 
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
-        return factory;
+        return cache;
     }
 
     public CommonCard getCardType() {

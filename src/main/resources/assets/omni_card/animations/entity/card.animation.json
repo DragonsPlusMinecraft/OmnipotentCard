@@ -15,8 +15,7 @@
 							"easing": "linear"
 						},
 						"0.2": {
-							"vector": [0, 360, 0],
-							"easing": "linear"
+							"vector": [0, 360, 0]
 						}
 					}
 				}
