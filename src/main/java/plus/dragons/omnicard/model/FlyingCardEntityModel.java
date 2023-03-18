@@ -5,6 +5,7 @@ import plus.dragons.omnicard.entity.FlyingCardEntity;
 import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib.model.GeoModel;
 
+
 public class FlyingCardEntityModel extends GeoModel<FlyingCardEntity> {
     @Override
     public ResourceLocation getModelResource(FlyingCardEntity object) {

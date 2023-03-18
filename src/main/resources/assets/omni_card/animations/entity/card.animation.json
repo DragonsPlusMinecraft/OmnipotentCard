@@ -1,58 +1,27 @@
 {
-  "format_version": "1.8.0",
-  "animations": {
-    "cardfly_normal": {
-      "loop": true,
-      "animation_length": 0.2,
-      "bones": {
-        "bone": {
-          "rotation": {
-            "0.0": {
-              "vector": [0, 0, 0]
-            },
-            "0.1": {
-              "vector": [0, 182.5, 0],
-              "easing": "linear"
-            },
-            "0.2": {
-              "vector": [0, 360, 0]
-            }
-          }
-        }
-      }
-    },
-    "cardfly_magi": {
-      "loop": true,
-      "animation_length": 0.2,
-      "bones": {
-        "bone": {
-          "rotation": {
-            "0.0": {
-              "vector": [0, 0, 0]
-            },
-            "0.1": {
-              "vector": [0, 0, -25]
-            },
-            "0.2": {
-              "vector": [0, 0, 30]
-            }
-          },
-          "scale": {
-            "0.0": {
-              "vector": [1, 1, 1]
-            },
-            "0.1": {
-              "vector": [1.1, 1, 1.1],
-              "easing": "step"
-            },
-            "0.2": {
-              "vector": [1, 1, 1],
-              "easing": "step"
-            }
-          }
-        }
-      }
-    }
-  },
-  "geckolib_format_version": 2
+	"format_version": "1.8.0",
+	"animations": {
+		"fly": {
+			"loop": true,
+			"animation_length": 0.2,
+			"bones": {
+				"bone": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.1": {
+							"vector": [0, 182.5, 0],
+							"easing": "linear"
+						},
+						"0.2": {
+							"vector": [0, 360, 0],
+							"easing": "linear"
+						}
+					}
+				}
+			}
+		}
+	},
+	"geckolib_format_version": 2
 }

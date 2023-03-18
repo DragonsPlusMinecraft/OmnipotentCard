@@ -11,6 +11,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import software.bernie.geckolib.animatable.GeoBlockEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
@@ -22,7 +23,7 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 import javax.annotation.Nullable;
 
-public class SpecialCardBlockTileEntity extends BlockEntity implements GeoAnimatable {
+public class SpecialCardBlockTileEntity extends BlockEntity implements GeoBlockEntity {
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
     private BlockCard card;
 
@@ -54,11 +55,6 @@ public class SpecialCardBlockTileEntity extends BlockEntity implements GeoAnimat
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return factory;
-    }
-
-    @Override
-    public double getTick(Object o) {
-        return 0;
     }
 
     public void tickServer() {

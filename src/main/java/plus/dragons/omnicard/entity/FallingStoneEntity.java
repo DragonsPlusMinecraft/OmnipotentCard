@@ -16,11 +16,10 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.network.NetworkHooks;
-import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.core.animation.AnimationController;
-import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
@@ -28,7 +27,7 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class FallingStoneEntity extends Entity implements GeoAnimatable {
+public class FallingStoneEntity extends Entity implements GeoEntity {
     private static final RawAnimation DISAPPEAR = RawAnimation.begin().thenPlayAndHold("disappear");
     private static final RawAnimation FALL = RawAnimation.begin().thenPlayAndHold("falling");
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
@@ -36,8 +35,8 @@ public class FallingStoneEntity extends Entity implements GeoAnimatable {
     private int disappearCountdown;
 
 
-    public FallingStoneEntity(EntityType<?> p_i48580_1_, Level p_i48580_2_) {
-        super(p_i48580_1_, p_i48580_2_);
+    public FallingStoneEntity(EntityType<?> entityType, Level level) {
+        super(entityType, level);
     }
 
     public FallingStoneEntity(Level world) {
@@ -95,28 +94,21 @@ public class FallingStoneEntity extends Entity implements GeoAnimatable {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
-    private <E extends GeoAnimatable> PlayState predicate(AnimationState<E> state) {
-        if (getEntityData().get(DONE_HIT)) {
-            state.getController().setAnimation(DISAPPEAR);
-        } else {
-            state.getController().setAnimation(FALL);
-        }
-        return PlayState.CONTINUE;
-    }
-
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
-        controllerRegistrar.add(new AnimationController<>(this, "falling_stone_controller", 1, this::predicate));
+        controllerRegistrar.add(new AnimationController<>(this, "falling_stone_controller", 1, state->{
+            if (state.getAnimatable().getEntityData().get(DONE_HIT)) {
+                state.getController().setAnimation(DISAPPEAR);
+            } else {
+                state.getController().setAnimation(FALL);
+            }
+            return PlayState.CONTINUE;
+        }));
     }
 
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return factory;
-    }
-
-    @Override
-    public double getTick(Object o) {
-        return tickCount;
     }
 
     private List<LivingEntity> getLivingEntityBeneath() {

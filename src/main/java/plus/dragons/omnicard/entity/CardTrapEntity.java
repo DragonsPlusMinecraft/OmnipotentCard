@@ -22,11 +22,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.entity.IEntityAdditionalSpawnData;
 import net.minecraftforge.network.NetworkHooks;
-import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.core.animation.AnimationController;
-import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
@@ -35,7 +34,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class CardTrapEntity extends Entity implements GeoAnimatable, IEntityAdditionalSpawnData {
+public class CardTrapEntity extends Entity implements GeoEntity, IEntityAdditionalSpawnData {
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
     private CommonCard card;
     private UUID ownerUUID;
@@ -50,9 +49,7 @@ public class CardTrapEntity extends Entity implements GeoAnimatable, IEntityAddi
     }
 
     @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
-        controllerRegistrar.add(new AnimationController<>(this, "card_controller", 1, state->PlayState.STOP));
-    }
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {}
 
     @Override
     public float getLightLevelDependentMagicValue() {
@@ -160,11 +157,6 @@ public class CardTrapEntity extends Entity implements GeoAnimatable, IEntityAddi
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return factory;
-    }
-
-    @Override
-    public double getTick(Object o) {
-        return tickCount;
     }
 
     public CommonCard getCardType() {

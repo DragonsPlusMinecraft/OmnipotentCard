@@ -11,6 +11,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.network.NetworkHooks;
+import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
@@ -20,7 +21,7 @@ import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class StoneSpikeEntity extends Entity implements GeoAnimatable {
+public class StoneSpikeEntity extends Entity implements GeoEntity {
     private static final RawAnimation RISE = RawAnimation.begin().thenPlayAndHold("rise");
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
     private static final EntityDataAccessor<Boolean> DONE_STRIKE = SynchedEntityData.defineId(StoneSpikeEntity.class, EntityDataSerializers.BOOLEAN);
@@ -68,27 +69,20 @@ public class StoneSpikeEntity extends Entity implements GeoAnimatable {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
-    private <E extends GeoAnimatable> PlayState predicate(AnimationState<E> state) {
-        if (getEntityData().get(DONE_STRIKE))
-            return PlayState.STOP;
-        else {
-            state.getController().setAnimation(RISE);
-            return PlayState.CONTINUE;
-        }
-    }
-
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
-        controllerRegistrar.add(new AnimationController<>(this, "falling_stone_controller", 1, this::predicate));
+        controllerRegistrar.add(new AnimationController<>(this, "falling_stone_controller", 1, state->{
+            if (state.getAnimatable().getEntityData().get(DONE_STRIKE))
+                return PlayState.STOP;
+            else {
+                state.getController().setAnimation(RISE);
+                return PlayState.CONTINUE;
+            }
+        }));
     }
 
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return factory;
-    }
-
-    @Override
-    public double getTick(Object o) {
-        return tickCount;
     }
 }
