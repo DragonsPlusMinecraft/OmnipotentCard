@@ -37,9 +37,10 @@ import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class FlyingCardEntity extends Projectile implements GeoAnimatable, IEntityAdditionalSpawnData {
+    private static final RawAnimation CARD_FLY = RawAnimation.begin().thenLoop("cardfly_normal");
     private static final EntityDataAccessor<Boolean> CAN_PICK_UP = SynchedEntityData.defineId(FlyingCardEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> LIFETIME = SynchedEntityData.defineId(FlyingCardEntity.class, EntityDataSerializers.INT);
-    private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this,false);
+    private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
     private CommonCard card;
     private double xPower;
     private double yPower;
@@ -76,7 +77,7 @@ public class FlyingCardEntity extends Projectile implements GeoAnimatable, IEnti
 
     private <E extends GeoAnimatable> PlayState predicate(AnimationState<E> state) {
         if (!canPickUp()) {
-            state.getController().setAnimation(RawAnimation.begin().thenLoop("cardfly_normal"));
+            state.getController().setAnimation(CARD_FLY);
             return PlayState.CONTINUE;
         } else {
             return PlayState.STOP;
@@ -158,7 +159,7 @@ public class FlyingCardEntity extends Projectile implements GeoAnimatable, IEnti
 
     @Override
     public double getTick(Object o) {
-        return 0;
+        return tickCount;
     }
 
     @Override

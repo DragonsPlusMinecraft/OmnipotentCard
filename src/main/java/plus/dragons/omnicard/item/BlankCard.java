@@ -42,7 +42,7 @@ public class BlankCard extends Item {
             double d1 = Mth.cos(player.getYRot() * ((float)Math.PI / 180F));
             ((ServerLevel)worldIn).sendParticles(ParticleTypes.SWEEP_ATTACK, player.getX() + d0, player.getY(0.5D), player.getZ() + d1, 0, d0, 0.0D, d1, 0.0D);
 
-            worldIn.playSound((Player) null, player.getX(), player.getY(), player.getZ(), SoundRegistry.THROW_CARD.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
+            worldIn.playSound(null, player.getX(), player.getY(), player.getZ(), SoundRegistry.THROW_CARD.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
 
             if (!player.getAbilities().instabuild) {
                 itemStack.shrink(1);

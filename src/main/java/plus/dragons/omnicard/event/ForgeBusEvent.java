@@ -1,6 +1,6 @@
 package plus.dragons.omnicard.event;
 
-import plus.dragons.omnicard.block.blockentity.SpecialCardBlockTileEntity;
+import plus.dragons.omnicard.blockentity.SpecialCardBlockTileEntity;
 import plus.dragons.omnicard.card.BlockCards;
 import plus.dragons.omnicard.misc.MiscUtil;
 import plus.dragons.omnicard.registry.BlockRegistry;

@@ -1,4 +1,4 @@
-package plus.dragons.omnicard.block.blockentity;
+package plus.dragons.omnicard.blockentity;
 
 import plus.dragons.omnicard.card.BlockCard;
 import plus.dragons.omnicard.card.BlockCards;

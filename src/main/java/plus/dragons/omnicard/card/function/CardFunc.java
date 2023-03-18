@@ -1,6 +1,6 @@
 package plus.dragons.omnicard.card.function;
 
-import plus.dragons.omnicard.block.blockentity.SpecialCardBlockTileEntity;
+import plus.dragons.omnicard.blockentity.SpecialCardBlockTileEntity;
 import plus.dragons.omnicard.entity.CardTrapEntity;
 import plus.dragons.omnicard.entity.FallingStoneEntity;
 import plus.dragons.omnicard.entity.FlyingCardEntity;
@@ -25,7 +25,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;

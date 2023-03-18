@@ -1,7 +1,7 @@
 package plus.dragons.omnicard.registry;
 
 import plus.dragons.omnicard.OmniCard;
-import plus.dragons.omnicard.block.blockentity.SpecialCardBlockTileEntity;
+import plus.dragons.omnicard.blockentity.SpecialCardBlockTileEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;

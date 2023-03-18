@@ -1,7 +1,7 @@
 package plus.dragons.omnicard.model;
 
 import plus.dragons.omnicard.OmniCard;
-import plus.dragons.omnicard.block.blockentity.SpecialCardBlockTileEntity;
+import plus.dragons.omnicard.blockentity.SpecialCardBlockTileEntity;
 import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib.model.GeoModel;
 

@@ -1,0 +1,24 @@
+{
+  "sources": [
+    {
+      "type": "directory",
+      "source": "card/standard",
+      "prefix": "card/standard/"
+    },
+    {
+      "type": "directory",
+      "source": "card/elemental",
+      "prefix": "card/elemental/"
+    },
+    {
+      "type": "directory",
+      "source": "card/special",
+      "prefix": "card/special/"
+    },
+    {
+      "type": "directory",
+      "source": "card/poker",
+      "prefix": "card/poker/"
+    }
+  ]
+}

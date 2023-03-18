@@ -1,7 +1,7 @@
 package plus.dragons.omnicard.block;
 
 import com.google.common.collect.Lists;
-import plus.dragons.omnicard.block.blockentity.SpecialCardBlockTileEntity;
+import plus.dragons.omnicard.blockentity.SpecialCardBlockTileEntity;
 import plus.dragons.omnicard.card.BlockCard;
 import plus.dragons.omnicard.misc.Configuration;
 import plus.dragons.omnicard.registry.BlockEntityRegistry;

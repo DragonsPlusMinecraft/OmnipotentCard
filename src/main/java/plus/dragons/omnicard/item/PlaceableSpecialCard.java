@@ -1,10 +1,9 @@
 package plus.dragons.omnicard.item;
 
-import plus.dragons.omnicard.block.blockentity.SpecialCardBlockTileEntity;
+import plus.dragons.omnicard.blockentity.SpecialCardBlockTileEntity;
 import plus.dragons.omnicard.card.BlockCard;
 import plus.dragons.omnicard.card.BlockCards;
 import plus.dragons.omnicard.misc.MiscUtil;
-import plus.dragons.omnicard.misc.ModGroup;
 import plus.dragons.omnicard.misc.ThemeColor;
 import plus.dragons.omnicard.registry.BlockRegistry;
 import net.minecraft.advancements.CriteriaTriggers;

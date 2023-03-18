@@ -21,6 +21,7 @@ import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class StoneSpikeEntity extends Entity implements GeoAnimatable {
+    private static final RawAnimation RISE = RawAnimation.begin().thenPlayAndHold("rise");
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
     private static final EntityDataAccessor<Boolean> DONE_STRIKE = SynchedEntityData.defineId(StoneSpikeEntity.class, EntityDataSerializers.BOOLEAN);
     private int lifetime;
@@ -71,7 +72,7 @@ public class StoneSpikeEntity extends Entity implements GeoAnimatable {
         if (getEntityData().get(DONE_STRIKE))
             return PlayState.STOP;
         else {
-            state.getController().setAnimation(RawAnimation.begin().thenPlayAndHold("rise"));
+            state.getController().setAnimation(RISE);
             return PlayState.CONTINUE;
         }
     }
@@ -88,6 +89,6 @@ public class StoneSpikeEntity extends Entity implements GeoAnimatable {
 
     @Override
     public double getTick(Object o) {
-        return 0;
+        return tickCount;
     }
 }

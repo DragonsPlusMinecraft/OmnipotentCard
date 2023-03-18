@@ -29,6 +29,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class FallingStoneEntity extends Entity implements GeoAnimatable {
+    private static final RawAnimation DISAPPEAR = RawAnimation.begin().thenPlayAndHold("disappear");
+    private static final RawAnimation FALL = RawAnimation.begin().thenPlayAndHold("falling");
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
     private static final EntityDataAccessor<Boolean> DONE_HIT = SynchedEntityData.defineId(FallingStoneEntity.class, EntityDataSerializers.BOOLEAN);
     private int disappearCountdown;
@@ -95,12 +97,11 @@ public class FallingStoneEntity extends Entity implements GeoAnimatable {
 
     private <E extends GeoAnimatable> PlayState predicate(AnimationState<E> state) {
         if (getEntityData().get(DONE_HIT)) {
-            state.getController().setAnimation(RawAnimation.begin().thenPlayAndHold("disappear"));
-            return PlayState.CONTINUE;
+            state.getController().setAnimation(DISAPPEAR);
         } else {
-            state.getController().setAnimation(RawAnimation.begin().thenPlayAndHold("falling"));
-            return PlayState.CONTINUE;
+            state.getController().setAnimation(FALL);
         }
+        return PlayState.CONTINUE;
     }
 
     @Override
@@ -115,7 +116,7 @@ public class FallingStoneEntity extends Entity implements GeoAnimatable {
 
     @Override
     public double getTick(Object o) {
-        return 0;
+        return tickCount;
     }
 
     private List<LivingEntity> getLivingEntityBeneath() {

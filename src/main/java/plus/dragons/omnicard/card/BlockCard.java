@@ -1,6 +1,6 @@
 package plus.dragons.omnicard.card;
 
-import plus.dragons.omnicard.block.blockentity.SpecialCardBlockTileEntity;
+import plus.dragons.omnicard.blockentity.SpecialCardBlockTileEntity;
 import plus.dragons.omnicard.card.function.ISpecialCardBlockTick;
 
 import java.util.Objects;

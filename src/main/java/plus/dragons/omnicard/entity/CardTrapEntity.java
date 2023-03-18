@@ -49,14 +49,9 @@ public class CardTrapEntity extends Entity implements GeoAnimatable, IEntityAddi
         this.card = card;
     }
 
-    private <E extends GeoAnimatable> PlayState predicate(AnimationState<E> event) {
-        // it seems like no need for animation
-        return PlayState.STOP;
-    }
-
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
-        controllerRegistrar.add(new AnimationController<>(this, "card_controller", 1, this::predicate));
+        controllerRegistrar.add(new AnimationController<>(this, "card_controller", 1, state->PlayState.STOP));
     }
 
     @Override
@@ -169,7 +164,7 @@ public class CardTrapEntity extends Entity implements GeoAnimatable, IEntityAddi
 
     @Override
     public double getTick(Object o) {
-        return 0;
+        return tickCount;
     }
 
     public CommonCard getCardType() {
