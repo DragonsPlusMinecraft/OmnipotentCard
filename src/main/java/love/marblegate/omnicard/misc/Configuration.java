@@ -11,7 +11,7 @@ public class Configuration {
     public static ForgeConfigSpec.DoubleValue FLYING_CARD_BRIGHTNESS;
     public static ForgeConfigSpec.DoubleValue TRAP_CARD_BRIGHTNESS;
     public static ForgeConfigSpec.IntValue FIELD_CARD_BRIGHTNESS;
-
+    public static ForgeConfigSpec.IntValue SEAL_CARD_VALID_RANGE;
 
     static {
         ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
@@ -29,6 +29,9 @@ public class Configuration {
         builder.push("field_card_setting");
         FIELD_CARD_BRIGHTNESS = builder.comment("Field Card Brightness.", "Default is 3").defineInRange("FIELD_CARD_BRIGHTNESS", 3, 0, 15);
         builder.pop();
+
+        builder.push("seal_card_setting");
+        SEAL_CARD_VALID_RANGE = builder.comment("Seal Card Valid Range", "Default is 15").defineInRange("SEAL_CARD_VALID_RANGE", 15, 1, 100);
         COMMON_CONFIG = builder.build();
     }
 }
