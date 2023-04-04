@@ -32,6 +32,8 @@ public class Configuration {
 
         builder.push("seal_card_setting");
         SEAL_CARD_VALID_RANGE = builder.comment("Seal Card Valid Range", "Default is 15").defineInRange("SEAL_CARD_VALID_RANGE", 15, 1, 100);
+        builder.pop();
+
         COMMON_CONFIG = builder.build();
     }
 }

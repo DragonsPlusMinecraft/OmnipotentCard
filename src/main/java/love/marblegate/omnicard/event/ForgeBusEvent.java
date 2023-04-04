@@ -21,7 +21,7 @@ public class ForgeBusEvent {
     @SubscribeEvent
     public static void preventHostileNearSEALCard(LivingSpawnEvent.CheckSpawn event) {
         if (event.getSpawnReason() != SpawnReason.NATURAL || !MiscUtil.isHostile(event.getEntityLiving(), false)) return;
-        int radius = (Configuration.SEAL_CARD_VALID_RANGE.get() + 1) / 2;
+        float radius = (float) (Configuration.SEAL_CARD_VALID_RANGE.get() + 1) / 2;
         if (StreamSupport.stream(
                 BlockPos.betweenClosed(
                         new BlockPos(event.getX() - radius, (int) event.getY() - radius, event.getZ() - radius),
