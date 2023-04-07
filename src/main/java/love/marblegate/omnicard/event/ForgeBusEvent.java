@@ -13,7 +13,6 @@ import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE)
@@ -22,7 +21,7 @@ public class ForgeBusEvent {
     public static void preventHostileNearSEALCard(LivingSpawnEvent.CheckSpawn event) {
         if (event.getSpawnReason() != SpawnReason.NATURAL || !MiscUtil.isHostile(event.getEntityLiving(), false)) return;
         float radius = (float) (Configuration.SEAL_CARD_VALID_RANGE.get() + 1) / 2;
-        if (StreamSupport.stream(BlockPos.betweenClosed(new BlockPos(event.getX() - radius, (int) event.getY() - radius, event.getZ() - radius), new BlockPos(event.getX() + radius, event.getY() + radius, event.getZ() + radius)).spliterator(), false).collect(Collectors.toList()).stream().anyMatch(pos -> {
+        if (StreamSupport.stream(BlockPos.betweenClosed(new BlockPos(event.getX() - radius, (int) event.getY() - radius, event.getZ() - radius), new BlockPos(event.getX() + radius, event.getY() + radius, event.getZ() + radius)).spliterator(), false).anyMatch(pos -> {
             if (event.getWorld().getBlockState(pos).getBlock() == BlockRegistry.SPECIAL_CARD_BLOCK.get()) {
                 TileEntity tileEntity = event.getWorld().getBlockEntity(pos);
                 if (tileEntity instanceof SpecialCardBlockTileEntity) {
