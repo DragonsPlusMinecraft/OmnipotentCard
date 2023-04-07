@@ -24,10 +24,7 @@ public class ForgeBusEvent {
         if (StreamSupport.stream(BlockPos.betweenClosed(new BlockPos(event.getX() - radius, (int) event.getY() - radius, event.getZ() - radius), new BlockPos(event.getX() + radius, event.getY() + radius, event.getZ() + radius)).spliterator(), false).anyMatch(pos -> {
             if (event.getWorld().getBlockState(pos).getBlock() == BlockRegistry.SPECIAL_CARD_BLOCK.get()) {
                 TileEntity tileEntity = event.getWorld().getBlockEntity(pos);
-                if (tileEntity instanceof SpecialCardBlockTileEntity) {
-                    SpecialCardBlockTileEntity specialCardBlockTile = (SpecialCardBlockTileEntity) tileEntity;
-                    return specialCardBlockTile.getCardType() == BlockCards.SEAL;
-                }
+                if (tileEntity instanceof SpecialCardBlockTileEntity) return ((SpecialCardBlockTileEntity) tileEntity).getCardType() == BlockCards.SEAL;
             }
             return false;
         })) {
