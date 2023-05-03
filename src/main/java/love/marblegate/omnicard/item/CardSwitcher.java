@@ -54,7 +54,7 @@ public class CardSwitcher extends Item {
                     cardTypeData.setSwitchingCard(false);
                 } else {
                     // Throwing Card
-                    if ((player.abilities.instabuild || hasEnoughBlankCard(player)) && cardTypeData.get() != CommonCards.UNKNOWN) {
+                    if ((player.abilities.instabuild || player.inventory.items.contains(ItemRegistry.BLANK_CARD.get().getDefaultInstance())) && cardTypeData.get() != CommonCards.UNKNOWN) {
                         Vector3d vector3d = player.getViewVector(1.0F);
 
                         double x = (vector3d.x * Configuration.FLYING_CARD_SPEED.get());
@@ -89,19 +89,10 @@ public class CardSwitcher extends Item {
         return ActionResult.sidedSuccess(player.getItemInHand(hand), worldIn.isClientSide());
     }
 
-    private boolean hasEnoughBlankCard(PlayerEntity player) {
-        for (ItemStack itemStack : player.inventory.items) {
-            if (itemStack.getItem().equals(ItemRegistry.BLANK_CARD.get())) return true;
-        }
-        return false;
-    }
-
     private void consumeBlankCard(PlayerEntity player) {
-        for (ItemStack itemStack : player.inventory.items) {
-            if (itemStack.getItem().equals(ItemRegistry.BLANK_CARD.get())) {
-                itemStack.shrink(1);
-            }
-        }
+        player.inventory.items.stream()
+                .filter(itemStack -> itemStack.getItem().equals(ItemRegistry.BLANK_CARD.get()))
+                .forEach(itemStack -> itemStack.shrink(1));
     }
 
     @Override
