@@ -5,13 +5,9 @@ import net.minecraftforge.common.ForgeConfigSpec;
 public class Configuration {
     public static final ForgeConfigSpec COMMON_CONFIG;
 
-    public static ForgeConfigSpec.DoubleValue FLYING_CARD_SPEED;
-    public static ForgeConfigSpec.BooleanValue HURT_MOUNT;
-    public static ForgeConfigSpec.BooleanValue HURT_PET;
-    public static ForgeConfigSpec.DoubleValue FLYING_CARD_BRIGHTNESS;
-    public static ForgeConfigSpec.DoubleValue TRAP_CARD_BRIGHTNESS;
-    public static ForgeConfigSpec.IntValue FIELD_CARD_BRIGHTNESS;
-    public static ForgeConfigSpec.IntValue SEAL_CARD_VALID_RANGE;
+    public static ForgeConfigSpec.BooleanValue HURT_MOUNT, HURT_PET;
+    public static ForgeConfigSpec.DoubleValue FLYING_CARD_SPEED, FLYING_CARD_BRIGHTNESS, TRAP_CARD_BRIGHTNESS;
+    public static ForgeConfigSpec.IntValue FIELD_CARD_BRIGHTNESS, SEAL_CARD_VALID_RANGE;
 
     static {
         ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();

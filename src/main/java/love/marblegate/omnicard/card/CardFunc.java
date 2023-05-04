@@ -38,7 +38,7 @@ public class CardFunc {
         public static void whiteCard(FlyingCardEntity card, LivingEntity victim) {
             if (!card.level.isClientSide()) {
                 victim.hurt(ModDamage.causeCardDamage(card, card.getOwner()), 6);
-                victim.level.playSound((PlayerEntity) null, victim.getX(), victim.getY(), victim.getZ(), SoundRegistry.COLORED_CARD_HIT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F);
+                victim.level.playSound(null, victim.getX(), victim.getY(), victim.getZ(), SoundRegistry.COLORED_CARD_HIT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F);
             }
         }
 
@@ -49,7 +49,7 @@ public class CardFunc {
                     victim.level.explode(victim, ModDamage.causeCardDamage(card, card.getOwner()).setExplosion(), null, victim.getX(), victim.getY(), victim.getZ(), 0.71F, false, explosion$mode);
                 }
                 victim.addEffect(new EffectInstance(EffectRegistry.READY_TO_EXPLODE.get(), 30));
-                victim.level.playSound((PlayerEntity) null, victim.getX(), victim.getY(), victim.getZ(), SoundRegistry.COLORED_CARD_HIT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F);
+                victim.level.playSound(null, victim.getX(), victim.getY(), victim.getZ(), SoundRegistry.COLORED_CARD_HIT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F);
             }
         }
 
@@ -62,7 +62,7 @@ public class CardFunc {
                     victim.addEffect(new EffectInstance(EffectRegistry.DIZZY.get(), 80));
                 }
                 victim.addEffect(new EffectInstance(Effects.CONFUSION, 80));
-                victim.level.playSound((PlayerEntity) null, victim.getX(), victim.getY(), victim.getZ(), SoundRegistry.COLORED_CARD_HIT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F);
+                victim.level.playSound(null, victim.getX(), victim.getY(), victim.getZ(), SoundRegistry.COLORED_CARD_HIT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F);
             }
         }
 
@@ -71,7 +71,7 @@ public class CardFunc {
                 victim.hurt(ModDamage.causeCardDamage(card, card.getOwner()), 6);
                 victim.addEffect(new EffectInstance(Effects.LEVITATION, 80));
                 victim.addEffect(new EffectInstance(Effects.GLOWING, 80));
-                victim.level.playSound((PlayerEntity) null, victim.getX(), victim.getY(), victim.getZ(), SoundRegistry.COLORED_CARD_HIT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F);
+                victim.level.playSound(null, victim.getX(), victim.getY(), victim.getZ(), SoundRegistry.COLORED_CARD_HIT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F);
             }
         }
 
@@ -82,14 +82,14 @@ public class CardFunc {
                 } else {
                     victim.heal(8);
                 }
-                victim.level.playSound((PlayerEntity) null, victim.getX(), victim.getY(), victim.getZ(), SoundRegistry.COLORED_CARD_HIT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F);
+                victim.level.playSound(null, victim.getX(), victim.getY(), victim.getZ(), SoundRegistry.COLORED_CARD_HIT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F);
             }
         }
 
         public static void skyCard(FlyingCardEntity card, LivingEntity victim) {
             if (!card.level.isClientSide()) {
                 victim.addEffect(new EffectInstance(Effects.MOVEMENT_SPEED, 60));
-                victim.level.playSound((PlayerEntity) null, victim.getX(), victim.getY(), victim.getZ(), SoundRegistry.COLORED_CARD_HIT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F);
+                victim.level.playSound(null, victim.getX(), victim.getY(), victim.getZ(), SoundRegistry.COLORED_CARD_HIT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F);
             }
         }
 
@@ -97,7 +97,7 @@ public class CardFunc {
             if (!card.level.isClientSide()) {
                 victim.hurt(ModDamage.causeCardDamage(card, card.getOwner()), 6);
                 victim.addEffect(new EffectInstance(Effects.BLINDNESS, 100));
-                victim.level.playSound((PlayerEntity) null, victim.getX(), victim.getY(), victim.getZ(), SoundRegistry.COLORED_CARD_HIT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F);
+                victim.level.playSound(null, victim.getX(), victim.getY(), victim.getZ(), SoundRegistry.COLORED_CARD_HIT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F);
             }
         }
 
@@ -106,7 +106,7 @@ public class CardFunc {
                 victim.hurt(ModDamage.causeCardDamage(card, card.getOwner()), 6);
                 victim.addEffect(new EffectInstance(Effects.POISON, 80));
                 victim.addEffect(new EffectInstance(EffectRegistry.POISON_NOW_LETHAL.get(), 81));
-                victim.level.playSound((PlayerEntity) null, victim.getX(), victim.getY(), victim.getZ(), SoundRegistry.COLORED_CARD_HIT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F);
+                victim.level.playSound(null, victim.getX(), victim.getY(), victim.getZ(), SoundRegistry.COLORED_CARD_HIT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F);
             }
         }
 
@@ -114,7 +114,7 @@ public class CardFunc {
             if (!card.level.isClientSide()) {
                 victim.hurt(ModDamage.causeCardDamage(card, card.getOwner()), 6);
                 victim.addEffect(new EffectInstance(Effects.WITHER, 80));
-                victim.level.playSound((PlayerEntity) null, victim.getX(), victim.getY(), victim.getZ(), SoundRegistry.COLORED_CARD_HIT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F);
+                victim.level.playSound(null, victim.getX(), victim.getY(), victim.getZ(), SoundRegistry.COLORED_CARD_HIT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F);
             }
         }
 
@@ -122,7 +122,7 @@ public class CardFunc {
             if (!card.level.isClientSide()) {
                 victim.hurt(ModDamage.causeCardDamage(card, card.getOwner()), 4);
                 victim.setSecondsOnFire(3);
-                victim.level.playSound((PlayerEntity) null, victim.getX(), victim.getY(), victim.getZ(), SoundRegistry.ELEMENTAL_CARD_HIT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F);
+                victim.level.playSound(null, victim.getX(), victim.getY(), victim.getZ(), SoundRegistry.ELEMENTAL_CARD_HIT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F);
                 MiscUtil.addParticle((ServerWorld) victim.level, ParticleTypes.FLAME,
                         card.getRandomX(1.2D), card.getRandomY() - 0.5d, card.getRandomZ(1.2D),
                         card.getDeltaMovement().normalize().x, card.getDeltaMovement().normalize().y, card.getDeltaMovement().normalize().z,
@@ -139,7 +139,7 @@ public class CardFunc {
                 if (vector3d.lengthSqr() > 0.0D) {
                     MiscUtil.applyKnockback(victim, vector3d.x, 0.8D, vector3d.z);
                 }
-                victim.level.playSound((PlayerEntity) null, victim.getX(), victim.getY(), victim.getZ(), SoundRegistry.ELEMENTAL_CARD_HIT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F);
+                victim.level.playSound(null, victim.getX(), victim.getY(), victim.getZ(), SoundRegistry.ELEMENTAL_CARD_HIT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F);
                 MiscUtil.addParticle((ServerWorld) victim.level, ParticleTypes.RAIN,
                         card.getRandomX(1.2D), card.getRandomY() - 0.5d, card.getRandomZ(1.2D),
                         card.getDeltaMovement().normalize().x, card.getDeltaMovement().normalize().y, card.getDeltaMovement().normalize().z,
@@ -150,7 +150,7 @@ public class CardFunc {
         public static void thunderCard(FlyingCardEntity card, LivingEntity victim) {
             if (!card.level.isClientSide()) {
                 handleCommonThunderCardLogic(victim, card.getOwner(), card);
-                victim.level.playSound((PlayerEntity) null, victim.getX(), victim.getY(), victim.getZ(), SoundRegistry.ELEMENTAL_CARD_HIT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F);
+                victim.level.playSound(null, victim.getX(), victim.getY(), victim.getZ(), SoundRegistry.ELEMENTAL_CARD_HIT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F);
             }
         }
 
@@ -160,7 +160,7 @@ public class CardFunc {
                 victim.addEffect(new EffectInstance(Effects.POISON, 80));
                 victim.addEffect(new EffectInstance(EffectRegistry.POISON_NOW_LETHAL.get(), 81));
                 victim.addEffect(new EffectInstance(EffectRegistry.DO_NOT_MOVE.get(), 60));
-                victim.level.playSound((PlayerEntity) null, victim.getX(), victim.getY(), victim.getZ(), SoundRegistry.ELEMENTAL_CARD_HIT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F);
+                victim.level.playSound(null, victim.getX(), victim.getY(), victim.getZ(), SoundRegistry.ELEMENTAL_CARD_HIT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F);
                 handleCommonBrambleCardPlantBush(victim);
             }
         }
@@ -170,7 +170,7 @@ public class CardFunc {
                 FallingStoneEntity fallingStoneEntity = new FallingStoneEntity(card.level);
                 fallingStoneEntity.setPos(victim.getX(), victim.getY() + 3, victim.getZ());
                 card.level.addFreshEntity(fallingStoneEntity);
-                victim.level.playSound((PlayerEntity) null, victim.getX(), victim.getY(), victim.getZ(), SoundRegistry.ELEMENTAL_CARD_HIT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F);
+                victim.level.playSound(null, victim.getX(), victim.getY(), victim.getZ(), SoundRegistry.ELEMENTAL_CARD_HIT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F);
             }
         }
 
@@ -181,7 +181,7 @@ public class CardFunc {
                         card.getRandomX(1.2D), card.getRandomY() - 0.5d, card.getRandomZ(1.2D),
                         (victim.getRandom().nextDouble() - 0.5D) * 2.0D, (victim.getRandom().nextDouble() - 0.5D) * 2.0D, (victim.getRandom().nextDouble() - 0.5D) * 2.0D,
                         1, 80);
-                victim.level.playSound((PlayerEntity) null, victim.getX(), victim.getY(), victim.getZ(), SoundRegistry.ELEMENTAL_CARD_HIT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F);
+                victim.level.playSound(null, victim.getX(), victim.getY(), victim.getZ(), SoundRegistry.ELEMENTAL_CARD_HIT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F);
 
             }
         }
@@ -209,7 +209,7 @@ public class CardFunc {
                     worked = true;
                 }
                 if(worked){
-                    card.level.playSound((PlayerEntity) null, pos.getX(), pos.getY(), pos.getZ(), SoundRegistry.ELEMENTAL_CARD_HIT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F);
+                    card.level.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundRegistry.ELEMENTAL_CARD_HIT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F);
                     MiscUtil.addParticle((ServerWorld) card.level, ParticleTypes.RAIN,
                             card.getRandomX(1.2D), card.getRandomY() - 0.5d, card.getRandomZ(1.2D),
                             card.getDeltaMovement().normalize().x, card.getDeltaMovement().normalize().y, card.getDeltaMovement().normalize().z,
@@ -234,12 +234,12 @@ public class CardFunc {
                 if(blockState.is(Blocks.TNT)){
                     if(card.getOwner() instanceof LivingEntity)
                         blockState.catchFire(card.level,pos,face, (LivingEntity) card.getOwner());
-                    else blockState.catchFire(card.level,pos,face, (LivingEntity) null);
+                    else blockState.catchFire(card.level,pos,face, null);
                     card.level.setBlockAndUpdate(pos,Blocks.AIR.defaultBlockState());
                     worked = true;
                 }
                 if(worked){
-                    card.level.playSound((PlayerEntity) null, pos.getX(), pos.getY(), pos.getZ(), SoundRegistry.ELEMENTAL_CARD_HIT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F);
+                    card.level.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundRegistry.ELEMENTAL_CARD_HIT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F);
                     MiscUtil.addParticle((ServerWorld) card.level, ParticleTypes.FLAME,
                             card.getRandomX(1.2D), card.getRandomY() - 0.5d, card.getRandomZ(1.2D),
                             card.getDeltaMovement().normalize().x, card.getDeltaMovement().normalize().y, card.getDeltaMovement().normalize().z,
@@ -288,7 +288,7 @@ public class CardFunc {
                 MiscUtil.addParticle((ServerWorld) victim.level, ParticleTypes.FLAME, trap.getX(), trap.getY() + 0.1D, trap.getZ(),
                         victim.getRandom().nextDouble() / 10, victim.getRandom().nextDouble() * 2, victim.getRandom().nextDouble() / 10,
                         1, 30);
-                victim.level.playSound((PlayerEntity) null, victim.getX(), victim.getY(), victim.getZ(), SoundRegistry.TRAP_CARD_HIT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F);
+                victim.level.playSound(null, victim.getX(), victim.getY(), victim.getZ(), SoundRegistry.TRAP_CARD_HIT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F);
             }
         }
 
@@ -301,7 +301,7 @@ public class CardFunc {
                 MiscUtil.addParticle((ServerWorld) victim.level, ParticleTypes.RAIN, trap.getX(), trap.getY() + 0.1D, trap.getZ(),
                         victim.getRandom().nextDouble() / 10, victim.getRandom().nextDouble() * 2, victim.getRandom().nextDouble() / 10,
                         1, 50);
-                victim.level.playSound((PlayerEntity) null, victim.getX(), victim.getY(), victim.getZ(), SoundRegistry.TRAP_CARD_HIT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F);
+                victim.level.playSound(null, victim.getX(), victim.getY(), victim.getZ(), SoundRegistry.TRAP_CARD_HIT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F);
             }
         }
 
@@ -309,7 +309,7 @@ public class CardFunc {
 
             if (!trap.level.isClientSide()) {
                 handleCommonThunderCardLogic(victim, trap.getOwner(), trap);
-                victim.level.playSound((PlayerEntity) null, victim.getX(), victim.getY(), victim.getZ(), SoundRegistry.TRAP_CARD_HIT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F);
+                victim.level.playSound(null, victim.getX(), victim.getY(), victim.getZ(), SoundRegistry.TRAP_CARD_HIT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F);
             }
         }
 
@@ -320,7 +320,7 @@ public class CardFunc {
                 victim.addEffect(new EffectInstance(EffectRegistry.POISON_NOW_LETHAL.get(), 81));
                 victim.addEffect(new EffectInstance(EffectRegistry.DO_NOT_MOVE.get(), 60));
                 handleCommonBrambleCardPlantBush(victim);
-                victim.level.playSound((PlayerEntity) null, victim.getX(), victim.getY(), victim.getZ(), SoundRegistry.TRAP_CARD_HIT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F);
+                victim.level.playSound(null, victim.getX(), victim.getY(), victim.getZ(), SoundRegistry.TRAP_CARD_HIT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F);
             }
         }
 
@@ -332,7 +332,7 @@ public class CardFunc {
                 victim.hurt(ModDamage.causeCardDamage(trap, trap.getOwner()), 6);
                 victim.addEffect(new EffectInstance(Effects.WEAKNESS, 100));
                 victim.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 100));
-                victim.level.playSound((PlayerEntity) null, victim.getX(), victim.getY(), victim.getZ(), SoundRegistry.TRAP_CARD_HIT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F);
+                victim.level.playSound(null, victim.getX(), victim.getY(), victim.getZ(), SoundRegistry.TRAP_CARD_HIT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F);
             }
         }
 
@@ -342,7 +342,7 @@ public class CardFunc {
                 MiscUtil.addParticle((ServerWorld) victim.level, ParticleTypes.PORTAL, trap.getX(), trap.getY() + 0.1D, trap.getZ(),
                         victim.getRandom().nextDouble() - 0.5D, victim.getRandom().nextDouble(), victim.getRandom().nextDouble() - 0.5D,
                         1, 50);
-                victim.level.playSound((PlayerEntity) null, victim.getX(), victim.getY(), victim.getZ(), SoundRegistry.TRAP_CARD_HIT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F);
+                victim.level.playSound(null, victim.getX(), victim.getY(), victim.getZ(), SoundRegistry.TRAP_CARD_HIT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F);
             }
         }
     }
@@ -537,14 +537,14 @@ public class CardFunc {
 
     private static void handleCommonBrambleCardPlantBush(LivingEntity victim) {
         BlockPos pos = victim.blockPosition();
-        if (victim.level.getBlockState(pos).getBlock().equals(Blocks.AIR) && victim.level.getBlockState(pos.below()).canSustainPlant((IBlockReader) victim.level, pos, Direction.UP, (IPlantable) Blocks.SWEET_BERRY_BUSH)) {
+        if (victim.level.getBlockState(pos).getBlock().equals(Blocks.AIR) && victim.level.getBlockState(pos.below()).canSustainPlant(victim.level, pos, Direction.UP, (IPlantable) Blocks.SWEET_BERRY_BUSH)) {
             victim.level.setBlockAndUpdate(pos, Blocks.SWEET_BERRY_BUSH.defaultBlockState().setValue(SweetBerryBushBlock.AGE,3));
         }
     }
 
     private static void playBlockCardOnRunSoundByChance(World level, BlockPos pos, double chance) {
         if (Math.random() < chance) {
-            level.playSound((PlayerEntity) null, pos.getX(), pos.getY(), pos.getZ(), SoundRegistry.BLOCK_CARD_ON_RUN.get(), SoundCategory.PLAYERS, 1.0F, 1.0F);
+            level.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundRegistry.BLOCK_CARD_ON_RUN.get(), SoundCategory.PLAYERS, 1.0F, 1.0F);
         }
     }
 }
