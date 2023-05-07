@@ -28,10 +28,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.GameRules;
-import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.IPlantable;
+
+import static love.marblegate.omnicard.misc.Configuration.*;
 
 public class CardFunc {
     public static class HitEntity {
@@ -120,8 +121,8 @@ public class CardFunc {
 
         public static void flameCard(FlyingCardEntity card, LivingEntity victim) {
             if (!card.level.isClientSide()) {
-                victim.hurt(ModDamage.causeCardDamage(card, card.getOwner()), 4);
-                victim.setSecondsOnFire(3);
+                victim.hurt(ModDamage.causeCardDamage(card, card.getOwner()), FLAME_CARD_DAMAGE.get());
+                victim.setSecondsOnFire(FLAME_CARD_FIRE_DURATION.get());
                 victim.level.playSound(null, victim.getX(), victim.getY(), victim.getZ(), SoundRegistry.ELEMENTAL_CARD_HIT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F);
                 MiscUtil.addParticle((ServerWorld) victim.level, ParticleTypes.FLAME,
                         card.getRandomX(1.2D), card.getRandomY() - 0.5d, card.getRandomZ(1.2D),
@@ -156,10 +157,10 @@ public class CardFunc {
 
         public static void brambleCard(FlyingCardEntity card, LivingEntity victim) {
             if (!card.level.isClientSide()) {
-                victim.hurt(ModDamage.causeCardDamage(card, card.getOwner()), 4);
-                victim.addEffect(new EffectInstance(Effects.POISON, 80));
+                victim.hurt(ModDamage.causeCardDamage(card, card.getOwner()), BRAMBLE_CARD_DAMAGE.get());
+                victim.addEffect(new EffectInstance(Effects.POISON, BRAMBLE_CARD_POISON_DURATION.get()));
+                victim.addEffect(new EffectInstance(EffectRegistry.DO_NOT_MOVE.get(), BRAMBLE_CARD_DO_NOT_MOVE_DURATION.get()));
                 victim.addEffect(new EffectInstance(EffectRegistry.POISON_NOW_LETHAL.get(), 81));
-                victim.addEffect(new EffectInstance(EffectRegistry.DO_NOT_MOVE.get(), 60));
                 victim.level.playSound(null, victim.getX(), victim.getY(), victim.getZ(), SoundRegistry.ELEMENTAL_CARD_HIT.get(), SoundCategory.PLAYERS, 1.0F, 1.0F);
                 handleCommonBrambleCardPlantBush(victim);
             }
@@ -351,7 +352,7 @@ public class CardFunc {
         public static void fieldCard(SpecialCardBlockTileEntity tileEntity) {
             if (tileEntity.getLifetime() % 10 == 0) {
                 MiscUtil.applyHolyFlameInArea((ServerWorld) tileEntity.getLevel(),
-                        MiscUtil.buildAABB(tileEntity.getBlockPos(), 8), 200);
+                        MiscUtil.buildAABB(tileEntity.getBlockPos(), (FIELD_CARD_HOLY_FLAME_BURNING_RADIUS.get() + 1) / 2), 200);
             }
             if (tileEntity.getLifetime() % 300 == 0) {
                 playBlockCardOnRunSoundByChance(tileEntity.getLevel(), tileEntity.getBlockPos(), 0.2);
@@ -401,8 +402,7 @@ public class CardFunc {
 
         public static void purificationCard(SpecialCardBlockTileEntity tileEntity) {
             if (tileEntity.getLifetime() == 90) {
-                MiscUtil.applyHugeDamageThenApplyFireInArea((ServerWorld) tileEntity.getLevel(),
-                        MiscUtil.buildAABB(tileEntity.getBlockPos(), 8), 20,3);
+                MiscUtil.applyHugeDamageThenApplyFireInArea((ServerWorld) tileEntity.getLevel(), MiscUtil.buildAABB(tileEntity.getBlockPos(), (PURIFICATION_CARD_VALID_RANGE.get() + 1) / 2), PURIFICATION_CARD_DAMAGE.get(), PURIFICATION_CARD_FIRE_DURATION.get());
             }
         }
 
@@ -518,7 +518,7 @@ public class CardFunc {
         lightningboltentity.setVisualOnly(true);
         victim.level.addFreshEntity(lightningboltentity);
         victim.thunderHit((ServerWorld) victim.level, lightningboltentity);
-        victim.hurt(ModDamage.causeCardDamage(damageSource, owner), 10);
+        victim.hurt(ModDamage.causeCardDamage(damageSource, owner), THUNDER_CARD_DAMAGE.get());
     }
 
     private static void handleCommonEndCardTeleport(LivingEntity victim) {
