@@ -26,6 +26,8 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static love.marblegate.omnicard.misc.Configuration.*;
+
 public class FallingStoneEntity extends Entity implements IAnimatable {
     private final AnimationFactory factory = new AnimationFactory(this);
     private static final DataParameter<Boolean> DONE_HIT = EntityDataManager.defineId(FlyingCardEntity.class, DataSerializers.BOOLEAN);
@@ -47,9 +49,9 @@ public class FallingStoneEntity extends Entity implements IAnimatable {
             List<LivingEntity> targets = getLivingEntityBeneath();
             if (!targets.isEmpty()) {
                 for (LivingEntity livingEntity : targets) {
-                    livingEntity.hurt(ModDamage.causeCardDamage(this, null), 6);
-                    livingEntity.addEffect(new EffectInstance(Effects.WEAKNESS, 100));
-                    livingEntity.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 100));
+                    livingEntity.hurt(ModDamage.causeCardDamage(this, null), EARTH_CARD_FALLING_STONE_DAMAGE.get());
+                    livingEntity.addEffect(new EffectInstance(Effects.WEAKNESS, EARTH_CARD_FALLING_STONE_WEAKNESS_DURATION.get()));
+                    livingEntity.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, EARTH_CARD_FALLING_STONE_MOVEMENT_SLOWDOWN_DURATION.get()));
                 }
                 getEntityData().set(DONE_HIT, true);
             }
