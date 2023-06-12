@@ -5,7 +5,7 @@ plugins {
     id 'org.parchmentmc.librarian.forgegradle' version '1.+'
 }
 
-version = '1.3.1'
+version = '1.3.2'
 group = 'plus.dragons.omnicard' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'omni_card-1.19.4'
 

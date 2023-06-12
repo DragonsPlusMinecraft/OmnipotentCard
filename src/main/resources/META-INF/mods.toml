@@ -33,6 +33,6 @@ Cards that can be thrown, used as a trap, or used as a force field.
 [[dependencies.omni_card]]
     modId="geckolib"
     mandatory=true
-    versionRange="[4.1.0,4.2)"
+    versionRange="[4.2,)"
     ordering="NONE"
     side="BOTH"
