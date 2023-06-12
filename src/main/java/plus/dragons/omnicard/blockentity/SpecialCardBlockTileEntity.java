@@ -1,8 +1,5 @@
 package plus.dragons.omnicard.blockentity;
 
-import plus.dragons.omnicard.card.BlockCard;
-import plus.dragons.omnicard.card.BlockCards;
-import plus.dragons.omnicard.registry.BlockEntityRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
@@ -11,12 +8,13 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import plus.dragons.omnicard.card.BlockCard;
+import plus.dragons.omnicard.card.BlockCards;
+import plus.dragons.omnicard.registry.BlockEntityRegistry;
 import software.bernie.geckolib.animatable.GeoBlockEntity;
-import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.core.animation.AnimationController;
-import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
@@ -40,7 +38,7 @@ public class SpecialCardBlockTileEntity extends BlockEntity implements GeoBlockE
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
-        controllerRegistrar.add(new AnimationController<>(this,  state->{
+        controllerRegistrar.add(new AnimationController<>(this, state -> {
             if (state.getAnimatable().preparedVanish) {
                 state.getController().setAnimation(RawAnimation.begin().thenPlay("card_on_disappear"));
             } else {

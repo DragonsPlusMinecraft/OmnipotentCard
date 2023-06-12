@@ -1,11 +1,11 @@
 package plus.dragons.omnicard.card;
 
-import plus.dragons.omnicard.entity.CardTrapEntity;
-import plus.dragons.omnicard.entity.FlyingCardEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.LivingEntity;
 import plus.dragons.omnicard.card.function.*;
+import plus.dragons.omnicard.entity.CardTrapEntity;
+import plus.dragons.omnicard.entity.FlyingCardEntity;
 
 import java.util.Objects;
 
@@ -31,7 +31,7 @@ public class CommonCard extends AbstractCard {
 
     public void hitBlock(FlyingCardEntity card, BlockPos pos, Direction face) {
         if (flyingCardHitBlockHandler != null) {
-            flyingCardHitBlockHandler.handleHit(card, pos,face);
+            flyingCardHitBlockHandler.handleHit(card, pos, face);
         }
     }
 
@@ -41,7 +41,7 @@ public class CommonCard extends AbstractCard {
         }
     }
 
-    public void onFly(FlyingCardEntity card){
+    public void onFly(FlyingCardEntity card) {
         flyingCardOnFlyHandler.handle(card);
     }
 

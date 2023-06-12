@@ -1,11 +1,11 @@
 package plus.dragons.omnicard.registry;
 
-import plus.dragons.omnicard.OmniCard;
-import plus.dragons.omnicard.block.SpecialCardBlock;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
+import plus.dragons.omnicard.OmniCard;
+import plus.dragons.omnicard.block.SpecialCardBlock;
 
 public class BlockRegistry {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, OmniCard.MODID);

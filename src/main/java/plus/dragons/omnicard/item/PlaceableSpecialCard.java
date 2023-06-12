@@ -1,11 +1,5 @@
 package plus.dragons.omnicard.item;
 
-import plus.dragons.omnicard.blockentity.SpecialCardBlockTileEntity;
-import plus.dragons.omnicard.card.BlockCard;
-import plus.dragons.omnicard.card.BlockCards;
-import plus.dragons.omnicard.misc.MiscUtil;
-import plus.dragons.omnicard.misc.ThemeColor;
-import plus.dragons.omnicard.registry.BlockRegistry;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -29,6 +23,12 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
 import org.jetbrains.annotations.NotNull;
+import plus.dragons.omnicard.blockentity.SpecialCardBlockTileEntity;
+import plus.dragons.omnicard.card.BlockCard;
+import plus.dragons.omnicard.card.BlockCards;
+import plus.dragons.omnicard.misc.MiscUtil;
+import plus.dragons.omnicard.misc.ThemeColor;
+import plus.dragons.omnicard.registry.BlockRegistry;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -122,7 +122,7 @@ public class PlaceableSpecialCard extends Item {
         tooltips.add(MiscUtil.tooltip("tooltip.omni_card.special_card.is_1", ThemeColor.HINT)
                 .append(MiscUtil.tooltip("tooltip.omni_card.special_card.is_" + (card.canRetrieve() ? "2" : "3"), ThemeColor.HINT_EMP))
                 .append(MiscUtil.tooltip("tooltip.omni_card.special_card.is_4", ThemeColor.HINT)));
-        String lifetime = card.getLifetime()==-1?" ∞ ":" " + card.getLifetime() / 20 + " ";
+        String lifetime = card.getLifetime() == -1 ? " ∞ " : " " + card.getLifetime() / 20 + " ";
         tooltips.add(MiscUtil.tooltip("tooltip.omni_card.special_card.is_5", ThemeColor.HINT)
                 .append(Component.literal(lifetime).setStyle(Style.EMPTY.withColor(ThemeColor.HINT_EMP).withBold(false))));
         tooltips.add(MiscUtil.tooltipBold("tooltip.omni_card.special_card.operation_place", ThemeColor.OPERATION)

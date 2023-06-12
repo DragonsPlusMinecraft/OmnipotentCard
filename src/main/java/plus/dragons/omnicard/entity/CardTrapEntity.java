@@ -1,15 +1,10 @@
 package plus.dragons.omnicard.entity;
 
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
-import org.jetbrains.annotations.NotNull;
-import plus.dragons.omnicard.card.CommonCard;
-import plus.dragons.omnicard.card.CommonCards;
-import plus.dragons.omnicard.misc.Configuration;
-import plus.dragons.omnicard.registry.EntityRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -23,6 +18,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.entity.IEntityAdditionalSpawnData;
 import net.minecraftforge.network.NetworkHooks;
+import org.jetbrains.annotations.NotNull;
+import plus.dragons.omnicard.card.CommonCard;
+import plus.dragons.omnicard.card.CommonCards;
+import plus.dragons.omnicard.misc.Configuration;
+import plus.dragons.omnicard.registry.EntityRegistry;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
@@ -48,7 +48,8 @@ public class CardTrapEntity extends Entity implements GeoEntity, IEntityAddition
     }
 
     @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {}
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+    }
 
     @Override
     public float getLightLevelDependentMagicValue() {
@@ -57,12 +58,12 @@ public class CardTrapEntity extends Entity implements GeoEntity, IEntityAddition
 
     @Override
     public @NotNull InteractionResult interact(Player player, @NotNull InteractionHand hand) {
-        if (!player.level.isClientSide()) {
+        if (!player.level().isClientSide()) {
             if (card.getRetrievedItem().isPresent())
-                player.level.addFreshEntity(new ItemEntity(player.level, this.getX(), this.getY(), this.getZ(), card.getRetrievedItem().get().getDefaultInstance()));
+                player.level().addFreshEntity(new ItemEntity(player.level(), this.getX(), this.getY(), this.getZ(), card.getRetrievedItem().get().getDefaultInstance()));
             remove(RemovalReason.DISCARDED);
         }
-        return InteractionResult.sidedSuccess(player.level.isClientSide());
+        return InteractionResult.sidedSuccess(player.level().isClientSide());
     }
 
     @Override
@@ -84,24 +85,24 @@ public class CardTrapEntity extends Entity implements GeoEntity, IEntityAddition
             // Natural falling and movement
             setDeltaMovement(getDeltaMovement().add(0.0D, -0.04D, 0.0D));
 
-            if (level.isClientSide) {
+            if (level().isClientSide) {
                 noPhysics = false;
             } else {
-                noPhysics = !level.noCollision(this);
+                noPhysics = !level().noCollision(this);
                 if (noPhysics) {
                     moveTowardsClosestSpace(getX(), (getBoundingBox().minY + getBoundingBox().maxY) / 2.0D, getZ());
                 }
             }
 
-            if (!onGround || getDeltaMovement().horizontalDistanceSqr() > (double) 1.0E-5F || (tickCount + getId()) % 4 == 0) {
+            if (!onGround() || getDeltaMovement().horizontalDistanceSqr() > (double) 1.0E-5F || (tickCount + getId()) % 4 == 0) {
                 move(MoverType.SELF, getDeltaMovement());
                 float f1 = 0.98F;
-                if (onGround) {
-                    f1 = level.getBlockState(new BlockPos((int) getX(), (int) (getY() - 1.0D), (int) getZ())).getFriction(level, new BlockPos((int) getX(), (int) (getY() - 1.0D), (int) getZ()), this) * 0.98F;
+                if (onGround()) {
+                    f1 = level().getBlockState(new BlockPos((int) getX(), (int) (getY() - 1.0D), (int) getZ())).getFriction(level(), new BlockPos((int) getX(), (int) (getY() - 1.0D), (int) getZ()), this) * 0.98F;
                 }
 
                 this.setDeltaMovement(getDeltaMovement().multiply(f1, 0.98D, f1));
-                if (onGround) {
+                if (onGround()) {
                     Vec3 vector3d1 = getDeltaMovement();
                     if (vector3d1.y < 0.0D) {
                         setDeltaMovement(vector3d1.multiply(1.0D, -0.5D, 1.0D));
@@ -112,7 +113,7 @@ public class CardTrapEntity extends Entity implements GeoEntity, IEntityAddition
     }
 
     private List<LivingEntity> getTriggeringTarget() {
-        return level.getEntities(this, getBoundingBox().expandTowards(0, 1, 0), entity -> entity instanceof LivingEntity)
+        return level().getEntities(this, getBoundingBox().expandTowards(0, 1, 0), entity -> entity instanceof LivingEntity)
                 .stream().map(entity -> (LivingEntity) entity).collect(Collectors.toList());
     }
 
@@ -129,7 +130,7 @@ public class CardTrapEntity extends Entity implements GeoEntity, IEntityAddition
     }
 
     @Nullable
-    public UUID getOwnerUUID(){
+    public UUID getOwnerUUID() {
         if (ownerUUID != null) {
             return ownerUUID;
         }
@@ -138,8 +139,8 @@ public class CardTrapEntity extends Entity implements GeoEntity, IEntityAddition
 
     @Nullable
     public Entity getOwner() {
-        if (ownerUUID != null && level instanceof ServerLevel) {
-            return ((ServerLevel) level).getEntity(ownerUUID);
+        if (ownerUUID != null && level() instanceof ServerLevel) {
+            return ((ServerLevel) level()).getEntity(ownerUUID);
         }
         return null;
     }

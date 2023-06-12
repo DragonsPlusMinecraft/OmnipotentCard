@@ -1,18 +1,6 @@
 package plus.dragons.omnicard.item;
 
 import com.google.common.collect.Lists;
-import plus.dragons.omnicard.OmniCard;
-import plus.dragons.omnicard.capability.cardtype.CardTypeData;
-import plus.dragons.omnicard.capability.cardtype.CardTypeItemStackProvider;
-import plus.dragons.omnicard.card.CommonCard;
-import plus.dragons.omnicard.card.CommonCards;
-import plus.dragons.omnicard.entity.FlyingCardEntity;
-import plus.dragons.omnicard.misc.Configuration;
-import plus.dragons.omnicard.misc.MiscUtil;
-import plus.dragons.omnicard.misc.ModGroup;
-import plus.dragons.omnicard.misc.ThemeColor;
-import plus.dragons.omnicard.registry.ItemRegistry;
-import plus.dragons.omnicard.registry.SoundRegistry;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -30,6 +18,17 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import plus.dragons.omnicard.OmniCard;
+import plus.dragons.omnicard.capability.cardtype.CardTypeData;
+import plus.dragons.omnicard.capability.cardtype.CardTypeItemStackProvider;
+import plus.dragons.omnicard.card.CommonCard;
+import plus.dragons.omnicard.card.CommonCards;
+import plus.dragons.omnicard.entity.FlyingCardEntity;
+import plus.dragons.omnicard.misc.Configuration;
+import plus.dragons.omnicard.misc.MiscUtil;
+import plus.dragons.omnicard.misc.ThemeColor;
+import plus.dragons.omnicard.registry.ItemRegistry;
+import plus.dragons.omnicard.registry.SoundRegistry;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -64,9 +63,9 @@ public class CardSwitcher extends Item {
                         flyingCardEntity.setPos(player.getX(), player.getY() + player.getEyeHeight(), player.getZ());
                         worldIn.addFreshEntity(flyingCardEntity);
 
-                        double d0 = -Mth.sin(player.getYRot() * ((float)Math.PI / 180F));
-                        double d1 = Mth.cos(player.getYRot() * ((float)Math.PI / 180F));
-                        ((ServerLevel)worldIn).sendParticles(ParticleTypes.SWEEP_ATTACK, player.getX() + d0, player.getY(0.5D), player.getZ() + d1, 0, d0, 0.0D, d1, 0.0D);
+                        double d0 = -Mth.sin(player.getYRot() * ((float) Math.PI / 180F));
+                        double d1 = Mth.cos(player.getYRot() * ((float) Math.PI / 180F));
+                        ((ServerLevel) worldIn).sendParticles(ParticleTypes.SWEEP_ATTACK, player.getX() + d0, player.getY(0.5D), player.getZ() + d1, 0, d0, 0.0D, d1, 0.0D);
 
                         worldIn.playSound((Player) null, player.getX(), player.getY(), player.getZ(), SoundRegistry.THROW_CARD.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
 

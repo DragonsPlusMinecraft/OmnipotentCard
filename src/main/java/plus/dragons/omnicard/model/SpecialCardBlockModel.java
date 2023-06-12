@@ -1,8 +1,8 @@
 package plus.dragons.omnicard.model;
 
+import net.minecraft.resources.ResourceLocation;
 import plus.dragons.omnicard.OmniCard;
 import plus.dragons.omnicard.blockentity.SpecialCardBlockTileEntity;
-import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib.model.GeoModel;
 
 public class SpecialCardBlockModel extends GeoModel<SpecialCardBlockTileEntity> {

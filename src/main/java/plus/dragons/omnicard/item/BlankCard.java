@@ -1,10 +1,5 @@
 package plus.dragons.omnicard.item;
 
-import plus.dragons.omnicard.card.CommonCards;
-import plus.dragons.omnicard.entity.FlyingCardEntity;
-import plus.dragons.omnicard.misc.Configuration;
-import plus.dragons.omnicard.misc.ModGroup;
-import plus.dragons.omnicard.registry.SoundRegistry;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
@@ -16,6 +11,10 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import plus.dragons.omnicard.card.CommonCards;
+import plus.dragons.omnicard.entity.FlyingCardEntity;
+import plus.dragons.omnicard.misc.Configuration;
+import plus.dragons.omnicard.registry.SoundRegistry;
 
 public class BlankCard extends Item {
 
@@ -38,9 +37,9 @@ public class BlankCard extends Item {
             flyingCardEntity.setPos(player.getX(), player.getY() + player.getEyeHeight(), player.getZ());
             worldIn.addFreshEntity(flyingCardEntity);
 
-            double d0 = -Mth.sin(player.getYRot() * ((float)Math.PI / 180F));
-            double d1 = Mth.cos(player.getYRot() * ((float)Math.PI / 180F));
-            ((ServerLevel)worldIn).sendParticles(ParticleTypes.SWEEP_ATTACK, player.getX() + d0, player.getY(0.5D), player.getZ() + d1, 0, d0, 0.0D, d1, 0.0D);
+            double d0 = -Mth.sin(player.getYRot() * ((float) Math.PI / 180F));
+            double d1 = Mth.cos(player.getYRot() * ((float) Math.PI / 180F));
+            ((ServerLevel) worldIn).sendParticles(ParticleTypes.SWEEP_ATTACK, player.getX() + d0, player.getY(0.5D), player.getZ() + d1, 0, d0, 0.0D, d1, 0.0D);
 
             worldIn.playSound(null, player.getX(), player.getY(), player.getZ(), SoundRegistry.THROW_CARD.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
 

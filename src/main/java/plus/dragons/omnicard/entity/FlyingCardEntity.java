@@ -1,15 +1,10 @@
 package plus.dragons.omnicard.entity;
 
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
-import org.jetbrains.annotations.NotNull;
-import plus.dragons.omnicard.card.CommonCard;
-import plus.dragons.omnicard.card.CommonCards;
-import plus.dragons.omnicard.misc.Configuration;
-import plus.dragons.omnicard.registry.EntityRegistry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -28,6 +23,11 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.entity.IEntityAdditionalSpawnData;
 import net.minecraftforge.network.NetworkHooks;
+import org.jetbrains.annotations.NotNull;
+import plus.dragons.omnicard.card.CommonCard;
+import plus.dragons.omnicard.card.CommonCards;
+import plus.dragons.omnicard.misc.Configuration;
+import plus.dragons.omnicard.registry.EntityRegistry;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
@@ -60,7 +60,7 @@ public class FlyingCardEntity extends Projectile implements GeoEntity, IEntityAd
             this.zPower = zPower / d0 * 0.1D;
         }
         this.card = card;
-        setRemainingLifetime(20*60);
+        setRemainingLifetime(20 * 60);
         setPickUpStatus(false);
     }
 
@@ -77,7 +77,7 @@ public class FlyingCardEntity extends Projectile implements GeoEntity, IEntityAd
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
         controllerRegistrar.add(new AnimationController<>(this, state -> state.setAndContinue(CARD_FLY))
-                .setAnimationSpeedHandler(flyingCardEntity -> flyingCardEntity.canPickUp()?0.01:1D));
+                .setAnimationSpeedHandler(flyingCardEntity -> flyingCardEntity.canPickUp() ? 0.01 : 1D));
     }
 
     @Override
@@ -90,7 +90,7 @@ public class FlyingCardEntity extends Projectile implements GeoEntity, IEntityAd
     public void tick() {
         // Removal Check
         Entity entity = this.getOwner();
-        if (!level.isClientSide()) {
+        if (!level().isClientSide()) {
             // This Height limit needs to be changed in 1.17
             if (blockPosition().getY() >= 384)
                 remove(RemovalReason.DISCARDED);
@@ -99,7 +99,7 @@ public class FlyingCardEntity extends Projectile implements GeoEntity, IEntityAd
                     this.spawnAtLocation(card.getRetrievedItem().get().getDefaultInstance(), 0.1F);
                 remove(RemovalReason.DISCARDED);
             } else {
-                setRemainingLifetime(getRemainingLifetime()-1);
+                setRemainingLifetime(getRemainingLifetime() - 1);
                 // Pickup Card on Ground
                 if (canPickUp() && qualifiedToBeRetrieved()) {
                     this.spawnAtLocation(card.getRetrievedItem().get().getDefaultInstance(), 0.1F);
@@ -109,13 +109,13 @@ public class FlyingCardEntity extends Projectile implements GeoEntity, IEntityAd
         }
 
         //Handle Movement & Hit
-        if (this.level.isClientSide || (entity == null || !entity.isRemoved()) && this.level.hasChunkAt(this.blockPosition())) {
+        if (this.level().isClientSide || (entity == null || !entity.isRemoved()) && this.level().hasChunkAt(this.blockPosition())) {
             super.tick();
-            HitResult hitresult = ProjectileUtil.getHitResult(this, this::canHitEntity);
+            HitResult hitresult = ProjectileUtil.getHitResultOnMoveVector(this, this::canHitEntity);
             if (hitresult.getType() != HitResult.Type.MISS && !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, hitresult)) {
                 this.onHit(hitresult);
             }
-            if(!canPickUp()){
+            if (!canPickUp()) {
                 card.onFly(this);
             }
             this.checkInsideBlocks();
@@ -158,11 +158,11 @@ public class FlyingCardEntity extends Projectile implements GeoEntity, IEntityAd
         super.onHitEntity(entityRayTraceResult);
         Entity entity = entityRayTraceResult.getEntity();
         if (entity instanceof LivingEntity && !canPickUp()) {
-            if((!Configuration.HURT_MOUNT.get() && entity.getPassengers().stream().anyMatch(entity1 -> {
+            if ((!Configuration.HURT_MOUNT.get() && entity.getPassengers().stream().anyMatch(entity1 -> {
                 if (getOwner() != null)
                     return entity1.getUUID().equals(getOwner().getUUID());
                 else return false;
-            })) || (!Configuration.HURT_PET.get() && isPet(entity))){
+            })) || (!Configuration.HURT_PET.get() && isPet(entity))) {
                 this.spawnAtLocation(card.getRetrievedItem().get().getDefaultInstance(), 0.1F);
                 remove(RemovalReason.DISCARDED);
             } else {
@@ -188,7 +188,7 @@ public class FlyingCardEntity extends Projectile implements GeoEntity, IEntityAd
     }
 
     private boolean qualifiedToBeRetrieved() {
-        return !level.getEntities(this, this.getBoundingBox(), (entity -> entity instanceof Player)).isEmpty();
+        return !level().getEntities(this, this.getBoundingBox(), (entity -> entity instanceof Player)).isEmpty();
     }
 
     private void stayOnBlock(BlockHitResult blockRayTraceResult) {
@@ -265,7 +265,7 @@ public class FlyingCardEntity extends Projectile implements GeoEntity, IEntityAd
 
     // For Delay Handling
     // 5 tick lifespan is counted
-    public boolean justBeenThrown(){
+    public boolean justBeenThrown() {
         return getRemainingLifetime() > 60 * 20 - 5;
     }
 
@@ -277,11 +277,11 @@ public class FlyingCardEntity extends Projectile implements GeoEntity, IEntityAd
         entityData.set(CAN_PICK_UP, b);
     }
 
-    public int getRemainingLifetime(){
+    public int getRemainingLifetime() {
         return this.entityData.get(LIFETIME);
     }
 
-    private void setRemainingLifetime(int lifetime){
+    private void setRemainingLifetime(int lifetime) {
         entityData.set(LIFETIME, lifetime);
     }
 }

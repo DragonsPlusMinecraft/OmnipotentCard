@@ -1,10 +1,6 @@
 package plus.dragons.omnicard.block;
 
 import com.google.common.collect.Lists;
-import plus.dragons.omnicard.blockentity.SpecialCardBlockTileEntity;
-import plus.dragons.omnicard.card.BlockCard;
-import plus.dragons.omnicard.misc.Configuration;
-import plus.dragons.omnicard.registry.BlockEntityRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -18,14 +14,16 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.level.material.PushReaction;
-import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import plus.dragons.omnicard.blockentity.SpecialCardBlockTileEntity;
+import plus.dragons.omnicard.card.BlockCard;
+import plus.dragons.omnicard.misc.Configuration;
+import plus.dragons.omnicard.registry.BlockEntityRegistry;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -35,11 +33,11 @@ public class SpecialCardBlock extends Block implements EntityBlock {
     private static final VoxelShape SHAPE = Block.box(5.5D, 2.5D, 5.5D, 10.5D, 12.5D, 10.5D);
 
     public SpecialCardBlock() {
-        super(Properties.of(new Material(MaterialColor.NONE, false, false, false, false, false, false, PushReaction.BLOCK)).noCollission().strength(0.1F, 5F));
+        super(Properties.of().noCollission().strength(0.1F, 5F).pushReaction(PushReaction.BLOCK));
     }
 
     @Override
-    public VoxelShape getShape(BlockState p_220053_1_, BlockGetter p_220053_2_, BlockPos p_220053_3_, CollisionContext p_220053_4_) {
+    public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
         return SHAPE;
     }
 
@@ -49,7 +47,7 @@ public class SpecialCardBlock extends Block implements EntityBlock {
     }
 
     @Override
-    public List<ItemStack> getDrops(BlockState blockState, LootContext.Builder builder) {
+    public List<ItemStack> getDrops(BlockState blockState, LootParams.Builder builder) {
         Entity entity = builder.getOptionalParameter(LootContextParams.THIS_ENTITY);
         if (entity instanceof Player) {
             BlockEntity tileentity = builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY);

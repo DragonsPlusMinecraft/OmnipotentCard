@@ -1,19 +1,20 @@
 package plus.dragons.omnicard;
 
-import plus.dragons.omnicard.capability.cardtype.CardTypeData;
-import plus.dragons.omnicard.card.CommonCard;
-import plus.dragons.omnicard.card.CommonCards;
-import plus.dragons.omnicard.item.CardSwitcher;
-import plus.dragons.omnicard.misc.Configuration;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import plus.dragons.omnicard.misc.ModGroup;
+import plus.dragons.omnicard.capability.cardtype.CardTypeData;
+import plus.dragons.omnicard.card.CommonCard;
+import plus.dragons.omnicard.card.CommonCards;
+import plus.dragons.omnicard.item.CardSwitcher;
+import plus.dragons.omnicard.misc.Configuration;
 import plus.dragons.omnicard.registry.*;
-import software.bernie.geckolib.GeckoLib;;
+import software.bernie.geckolib.GeckoLib;
+
+;
 
 @Mod(OmniCard.MODID)
 public class OmniCard {
@@ -31,8 +32,7 @@ public class OmniCard {
         BlockRegistry.BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
         BlockEntityRegistry.BLOCK_ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
         SoundRegistry.SOUNDS.register(FMLJavaModLoadingContext.get().getModEventBus());
-
-        modEventbus.addListener(ModGroup::registerTabs);
+        CreativeTabRegistry.TABS.register(FMLJavaModLoadingContext.get().getModEventBus());
 
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
     }

@@ -1,8 +1,8 @@
 package plus.dragons.omnicard.model;
 
+import net.minecraft.resources.ResourceLocation;
 import plus.dragons.omnicard.OmniCard;
 import plus.dragons.omnicard.entity.StoneSpikeEntity;
-import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib.model.GeoModel;
 
 public class StoneSpikeEntityModel extends GeoModel<StoneSpikeEntity> {

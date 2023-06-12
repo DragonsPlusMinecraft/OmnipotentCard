@@ -1,10 +1,8 @@
 package plus.dragons.omnicard.entity;
 
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
-import org.jetbrains.annotations.NotNull;
-import plus.dragons.omnicard.registry.EntityRegistry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -12,6 +10,8 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.network.NetworkHooks;
+import org.jetbrains.annotations.NotNull;
+import plus.dragons.omnicard.registry.EntityRegistry;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
@@ -37,7 +37,7 @@ public class StoneSpikeEntity extends Entity implements GeoEntity {
 
     @Override
     public void tick() {
-        if (!level.isClientSide()) {
+        if (!level().isClientSide()) {
             if (lifetime <= 0)
                 remove(RemovalReason.DISCARDED);
             else
@@ -70,7 +70,7 @@ public class StoneSpikeEntity extends Entity implements GeoEntity {
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
         controllerRegistrar.add(new AnimationController<>(this, state -> state.setAndContinue(RISE))
-                .setAnimationSpeedHandler(stoneSpikeEntity -> stoneSpikeEntity.getEntityData().get(DONE_STRIKE)? 0: 1D));
+                .setAnimationSpeedHandler(stoneSpikeEntity -> stoneSpikeEntity.getEntityData().get(DONE_STRIKE) ? 0 : 1D));
     }
 
     @Override

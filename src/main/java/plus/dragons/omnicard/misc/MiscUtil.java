@@ -1,6 +1,5 @@
 package plus.dragons.omnicard.misc;
 
-import plus.dragons.omnicard.registry.MobEffectRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.network.chat.Component;
@@ -9,7 +8,6 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.FlyingMob;
@@ -23,14 +21,15 @@ import net.minecraft.world.entity.monster.hoglin.Hoglin;
 import net.minecraft.world.entity.monster.piglin.Piglin;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
+import plus.dragons.omnicard.registry.MobEffectRegistry;
 
 public class MiscUtil {
     public static boolean canTeleportTo(BlockPos pos, LivingEntity livingEntity, boolean isPlayer) {
-        Level level = livingEntity.level;
-        if (level.getBlockState(pos).getBlock().isPossibleToRespawnInThis() || level.getBlockState(pos.above()).getBlock().isPossibleToRespawnInThis()) {
+        Level level = livingEntity.level();
+        if (level.getBlockState(pos).getBlock().isPossibleToRespawnInThis(level.getBlockState(pos)) || level.getBlockState(pos.above()).getBlock().isPossibleToRespawnInThis(level.getBlockState(pos.above()))) {
             if (isPlayer) {
                 for (int i = -1; i > -6; i--) {
-                    if (level.getBlockState(pos.below(i)).getMaterial().isSolid()) {
+                    if (level.getBlockState(pos.below(i)).isSolid()) {
                         return true;
                     }
                 }
@@ -85,7 +84,7 @@ public class MiscUtil {
     public static void applyHugeDamageThenApplyFireInArea(ServerLevel world, AABB aabb, float damage, int fireSecond) {
         world.getEntities((Entity) null, aabb, entity -> entity instanceof LivingEntity && isHostile((LivingEntity) entity, false))
                 .forEach(entity -> {
-                    entity.hurt(entity.damageSources().magic(),damage);
+                    entity.hurt(entity.damageSources().magic(), damage);
                     entity.setSecondsOnFire(fireSecond);
                 });
     }

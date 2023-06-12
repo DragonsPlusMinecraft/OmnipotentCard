@@ -1,13 +1,5 @@
 package plus.dragons.omnicard.item;
 
-import plus.dragons.omnicard.card.CommonCard;
-import plus.dragons.omnicard.entity.CardTrapEntity;
-import plus.dragons.omnicard.entity.FlyingCardEntity;
-import plus.dragons.omnicard.misc.Configuration;
-import plus.dragons.omnicard.misc.MiscUtil;
-import plus.dragons.omnicard.misc.ModGroup;
-import plus.dragons.omnicard.misc.ThemeColor;
-import plus.dragons.omnicard.registry.SoundRegistry;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
@@ -24,6 +16,13 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import plus.dragons.omnicard.card.CommonCard;
+import plus.dragons.omnicard.entity.CardTrapEntity;
+import plus.dragons.omnicard.entity.FlyingCardEntity;
+import plus.dragons.omnicard.misc.Configuration;
+import plus.dragons.omnicard.misc.MiscUtil;
+import plus.dragons.omnicard.misc.ThemeColor;
+import plus.dragons.omnicard.registry.SoundRegistry;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -53,9 +52,9 @@ public class ElementalCard extends Item {
             flyingCardEntity.setOwner(player);
             worldIn.addFreshEntity(flyingCardEntity);
 
-            double d0 = -Mth.sin(player.getYRot() * ((float)Math.PI / 180F));
-            double d1 = Mth.cos(player.getYRot() * ((float)Math.PI / 180F));
-            ((ServerLevel)worldIn).sendParticles(ParticleTypes.SWEEP_ATTACK, player.getX() + d0, player.getY(0.5D), player.getZ() + d1, 0, d0, 0.0D, d1, 0.0D);
+            double d0 = -Mth.sin(player.getYRot() * ((float) Math.PI / 180F));
+            double d1 = Mth.cos(player.getYRot() * ((float) Math.PI / 180F));
+            ((ServerLevel) worldIn).sendParticles(ParticleTypes.SWEEP_ATTACK, player.getX() + d0, player.getY(0.5D), player.getZ() + d1, 0, d0, 0.0D, d1, 0.0D);
 
             if (!player.getAbilities().instabuild) {
                 itemStack.shrink(1);

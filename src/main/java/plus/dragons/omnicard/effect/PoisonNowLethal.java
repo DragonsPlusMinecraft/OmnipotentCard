@@ -1,10 +1,10 @@
 package plus.dragons.omnicard.effect;
 
-import plus.dragons.omnicard.misc.ModDamage;
-import plus.dragons.omnicard.registry.MobEffectRegistry;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
+import plus.dragons.omnicard.misc.ModDamage;
+import plus.dragons.omnicard.registry.MobEffectRegistry;
 
 public class PoisonNowLethal extends HiddenEffect {
     public PoisonNowLethal(MobEffectCategory p_i50391_1_) {
@@ -13,7 +13,7 @@ public class PoisonNowLethal extends HiddenEffect {
 
     @Override
     public void applyEffectTick(LivingEntity livingEntity, int amplifier) {
-        if (this == MobEffectRegistry.POISON_NOW_LETHAL.get() && !livingEntity.level.isClientSide()) {
+        if (this == MobEffectRegistry.POISON_NOW_LETHAL.get() && !livingEntity.level().isClientSide()) {
             if (livingEntity.hasEffect(MobEffects.POISON) && livingEntity.getHealth() <= 1.5F) {
                 livingEntity.hurt(ModDamage.causeLethalPoisonDamage(), 100);
             }

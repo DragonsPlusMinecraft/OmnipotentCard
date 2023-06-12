@@ -1,7 +1,7 @@
 package plus.dragons.omnicard.card.function;
 
-import plus.dragons.omnicard.entity.FlyingCardEntity;
 import net.minecraft.world.entity.LivingEntity;
+import plus.dragons.omnicard.entity.FlyingCardEntity;
 
 @FunctionalInterface
 public interface IFlyingCardHitEntityHandler {

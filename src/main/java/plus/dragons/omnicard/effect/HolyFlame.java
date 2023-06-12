@@ -1,12 +1,12 @@
 package plus.dragons.omnicard.effect;
 
-import plus.dragons.omnicard.misc.ModDamage;
-import plus.dragons.omnicard.registry.MobEffectRegistry;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import plus.dragons.omnicard.misc.ModDamage;
+import plus.dragons.omnicard.registry.MobEffectRegistry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,10 +20,10 @@ public class HolyFlame extends MobEffect {
 
     @Override
     public void applyEffectTick(LivingEntity entity, int amplifier) {
-        if (!entity.level.isClientSide()) {
+        if (!entity.level().isClientSide()) {
             entity.setSecondsOnFire(2);
             entity.addEffect(new MobEffectInstance(MobEffectRegistry.HOLY_FLAME.get(), 21, amplifier));
-            if (entity.fireImmune() || entity.level.isRaining()) {
+            if (entity.fireImmune() || entity.level().isRaining()) {
                 entity.hurt(ModDamage.causeHolyFlameDamage(), 1);
             }
         }

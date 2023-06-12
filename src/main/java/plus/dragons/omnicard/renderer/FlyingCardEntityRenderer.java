@@ -2,10 +2,10 @@ package plus.dragons.omnicard.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.util.Mth;
 import plus.dragons.omnicard.entity.FlyingCardEntity;
 import plus.dragons.omnicard.model.FlyingCardEntityModel;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
 public class FlyingCardEntityRenderer extends GeoEntityRenderer<FlyingCardEntity> {
